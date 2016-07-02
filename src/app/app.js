@@ -1,7 +1,8 @@
 import React from 'react';
 import {render} from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Home from './page/home';
+import Routes from './Routes'
 
 injectTapEventPlugin();
-render(<Home />, document.getElementById('app'));
+
+render(Routes, document.getElementById('app'));
