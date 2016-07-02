@@ -1,9 +1,9 @@
 import React from 'react';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
-import Home from './page/home';
-import Master from './Master';
+import Master from './master';
 
+import Home from './page/home';
 // import ItemList from 'page/item_list'
 // import ItemDetail from 'page/item_detail'
 // import ShoppingCart from 'page/shopping_cart'

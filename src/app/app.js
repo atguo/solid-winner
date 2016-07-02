@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Routes from './Routes'
+import Routes from './routes'
 
 injectTapEventPlugin();
 
