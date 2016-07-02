@@ -4,8 +4,8 @@ import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import Master from './master';
 
 import Home from './page/home';
+import ItemDetail from './page/item_detail'
 // import ItemList from 'page/item_list'
-// import ItemDetail from 'page/item_detail'
 // import ShoppingCart from 'page/shopping_cart'
 // import Pay from 'page/pay'
 
@@ -14,10 +14,11 @@ const Routes = (
     <Route path='/' component={Master} >
       <IndexRoute component={Home} />
       <Route path="/Home" component={Home} />
+      <Route path="/ItemDetail/:itemId" component={ItemDetail} />
+
 
       {
       // <Route path="ItemList" component={ItemList} />
-      // <Route path="ItemDetail" component={ItemDetail} />
       // <Route path="ShoppingCart" component={ShoppingCart} />
       // <Route path="Pay" component={Pay} />
       }

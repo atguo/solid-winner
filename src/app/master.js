@@ -13,7 +13,6 @@ class Master extends Component {
     });
   };
 
-
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
