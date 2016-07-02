@@ -28,15 +28,6 @@ class Master extends Component {
           Master:
           {this.props.children}
 
-
-          <AppNavDrawer
-            style={styles.navDrawer}
-            location={location}
-            docked={docked}
-            onRequestChangeNavDrawer={this.handleChangeRequestNavDrawer}
-            onChangeList={this.handleChangeList}
-            open={navDrawerOpen}
-          />
         </div>
       </MuiThemeProvider>
     )
