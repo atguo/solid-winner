@@ -61,11 +61,14 @@ class Master extends Component {
               <ListItem
                 disabled={true}
                 children={
-                  <div style={{paddingBottom: 20}}>
-                    <Avatar size={60}>UN</Avatar>
-                    <span style={{paddingLeft: 15}}>
-                      User Name [Logout]
-                    </span>
+                  <div style={{height: 60}}>
+                    <div style={{display: 'inline-block', position: 'absolute'}}>
+                      <Avatar size={60}>UN</Avatar>
+                    </div>
+                    <div style={{position: 'absolute', display:'inline-block', left: 100}}>
+                      <div>游客</div>
+                      <div>登录</div>
+                    </div>
                   </div>
                 }
               />
