@@ -4,7 +4,7 @@ import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import Master from './master';
 
 import Home from './page/home';
-import TabsExampleSwipeable from './page/item_detail'
+import ItemDetail from './page/item_detail'
 // import ItemList from 'page/item_list'
 // import ShoppingCart from 'page/shopping_cart'
 // import Pay from 'page/pay'
@@ -14,7 +14,7 @@ const Routes = (
     <Route path='/' component={Master} >
       <IndexRoute component={Home} />
       <Route path="/Home" component={Home} />
-      <Route path="/ItemDetail/:itemId" component={TabsExampleSwipeable } />
+      <Route path="/ItemDetail/:itemId" component={ItemDetail} />
 
 
       {
