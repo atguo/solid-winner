@@ -75,8 +75,7 @@ class Master extends Component {
               <ListItem primaryText='设置' leftIcon={<ActionSettings />}/>
             </List>
           </Drawer>
-
-          Master:
+        
           {this.props.children}
 
         </div>
