@@ -45,9 +45,7 @@ class Master extends Component {
             onRequestChange={this.handleChangeRequestNavDrawer}
           >
           </Drawer>
-
-
-          Master:
+          
           {this.props.children}
 
         </div>
