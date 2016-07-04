@@ -77,29 +77,41 @@ class Master extends Component {
                 }
               />
 
-              <ListItem
-                key='Home'
-                primaryText='主页'
-                leftIcon={<ActionHome />}
-              />
+              <div
+                onClick={() => {
+                  this.setState({
+                    navDrawerOpen: false,
+                  });
+                }}
+              >
+                <ListItem
+                  key='Home'
+                  primaryText='主页'
+                  leftIcon={<ActionHome />}
+                  href='/#/Home'
+                />
 
-              <ListItem
-                key='Search'
-                primaryText='搜索'
-                leftIcon={<ActionSearch />}
-              />
+                <ListItem
+                  key='Search'
+                  primaryText='搜索'
+                  leftIcon={<ActionSearch />}
+                  href='/#/Home'
+                />
 
-              <ListItem
-                key='ShoppingCart'
-                primaryText='购物车'
-                leftIcon={<ActionShoppingBasket />}
-              />
+                <ListItem
+                  key='ShoppingCart'
+                  primaryText='购物车'
+                  leftIcon={<ActionShoppingBasket />}
+                  href='/#/ShoppingCart'
+                />
 
-              <ListItem
-                key='Settings'
-                primaryText='设置'
-                leftIcon={<ActionSettings />}
-              />
+                <ListItem
+                  key='Settings'
+                  primaryText='设置'
+                  leftIcon={<ActionSettings />}
+                  href='/#/Settings'
+                />
+              </div>
 
             </List>
           </Drawer>
