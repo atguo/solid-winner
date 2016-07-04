@@ -65,20 +65,44 @@ class Master extends Component {
                     <div style={{display: 'inline-block', position: 'absolute'}}>
                       <Avatar size={60}>UN</Avatar>
                     </div>
-                    <div style={{position: 'absolute', display:'inline-block', left: 100}}>
+                    <div style={{position: 'absolute',
+                      display: 'inline-block',
+                      left: 100
+                    }}>
                       <div>游客</div>
                       <div>登录</div>
                     </div>
                   </div>
                 }
               />
-              <ListItem primaryText='主页' leftIcon={<ActionHome />}/>
-              <ListItem primaryText='搜索' leftIcon={<ActionSearch />}/>
-              <ListItem primaryText='购物车' leftIcon={<ActionShoppingBasket />}/>
-              <ListItem primaryText='设置' leftIcon={<ActionSettings />}/>
+
+              <ListItem
+                key='Home'
+                primaryText='主页'
+                leftIcon={<ActionHome />}
+              />
+
+              <ListItem
+                key='Search'
+                primaryText='搜索'
+                leftIcon={<ActionSearch />}
+              />
+
+              <ListItem
+                key='ShoppingCart'
+                primaryText='购物车'
+                leftIcon={<ActionShoppingBasket />}
+              />
+
+              <ListItem
+                key='Settings'
+                primaryText='设置'
+                leftIcon={<ActionSettings />}
+              />
+
             </List>
           </Drawer>
-          
+
           {this.props.children}
 
         </div>
