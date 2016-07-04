@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Route, IndexRoute, hashHistory} from 'react-router';
+import {Router, Route, IndexRedirect, hashHistory} from 'react-router';
 
 import Master from './master';
 
@@ -12,14 +12,14 @@ import ShoppingCart from './page/shopping_cart'
 const Routes = (
   <Router history={hashHistory} >
     <Route path='/' component={Master} >
-      <IndexRoute component={Home} />
-      <Route path="/Home" component={Home} />
-      <Route path="/ItemDetail/:itemId" component={ItemDetail} />
-      <Route path="/ItemList" component={ItemList} />
-      <Route path="/ShoppingCart" component={ShoppingCart} />
+      <IndexRedirect to='/Home' />
+      <Route path='/Home' component={Home} />
+      <Route path='/ItemDetail/:itemId' component={ItemDetail} />
+      <Route path='/ItemList' component={ItemList} />
+      <Route path='/ShoppingCart' component={ShoppingCart} />
 
       {
-      // <Route path="Pay" component={Pay} />
+      // <Route path='Pay' component={Pay} />
       }
 
     </Route>
