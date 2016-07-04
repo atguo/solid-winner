@@ -8,6 +8,9 @@ import MenuItem from 'material-ui/MenuItem';
 
 import NavigationMoreVert from 'material-ui/svg-icons/navigation/more-vert'
 
+import {setTitle} from '../action/navigation'
+import {store} from '../app'
+
 
 const tilesData = [
   {
@@ -101,6 +104,7 @@ class ItemList extends Component {
 
 
   render() {
+    store.dispatch(setTitle('商品列表'));
     return <div style={this.styles.root}>
       <GridList
         style={this.styles.gridList}

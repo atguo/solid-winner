@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Title from 'react-title-component'
+import {connect} from 'react-redux';
+import update from 'immutability-helper'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
@@ -40,11 +42,10 @@ class Master extends Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
-          <Title render='Title.render' />
-
+          <Title render={this.props.title} />
           <AppBar
             onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
-            title='AppBar.title'
+            title={this.props.title}
             iconElementRight={
               <IconButton>
                 <ActionShoppingBasket />
@@ -111,4 +112,8 @@ class Master extends Component {
   }
 }
 
-export default Master;
+const mapStateToProps = (state, props) => {
+  return update(props, {title: {$set: state.navigation.title}});
+}
+
+export default connect(mapStateToProps)(Master);
