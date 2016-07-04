@@ -4,7 +4,88 @@ import {Card,
         CardMedia,
         CardTitle,
         CardText,
+        CardActions,
         CardHeader} from 'material-ui/Card';
+import {GridList, GridTile} from 'material-ui/GridList'
+import FlatButton from 'material-ui/FlatButton'
+import {Table ,
+        TableBody,
+        TableHeader,
+        TableHeaderColumn,
+        TableRow,
+        TableRowColumn} from "material-ui/Table"
+import {blue500} from 'material-ui/styles/colors'
+
+const styles = {
+  root: {
+    dispaly: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    overflowY: 'auto',
+    marginBottom: 24,
+  },
+  table: {
+    height: 10,
+  },
+  button: {
+    height: 50,
+    width: 90,
+  },
+};
+
+const tilesData = [
+  {
+    img: 'http://placehold.it/500/500',
+  },
+  {
+    img: 'http://placehold.it/500/500',
+  },
+  {
+    img: 'http://placehold.it/500/500',
+  },
+  {
+    img: 'http://placehold.it/500/500',
+  },
+  {
+    img: 'http://placehold.it/500/500',
+  },
+  {
+    img: 'http://placehold.it/500/500',
+  },
+  {
+    img: 'http://placehold.it/500/500',
+  },
+
+]
+
+const infos = [
+  {
+    zz: "xxx"
+  },
+  {
+    zz: "xxx"
+  },
+  {
+    zz: "xxx"
+  },
+  {
+    zz: "xxx"
+  },
+  {
+    zz: "xxx"
+  },
+  {
+    zz: "xxx"
+  },
+  {
+    zz: "xxx"
+  },
+  {
+    zz: "xxx"
+  },
+]
 
 class ItemDetail extends Component{
   render() {
@@ -14,7 +95,11 @@ class ItemDetail extends Component{
 
           <Tab label="商品简介" >
             <Card>
-              <CardHeader title="图片"/>
+              <CardHeader title="图片"
+                          titleColor={blue500}
+                          avatar="http://loempixel.com/100/100nature/"
+                          subtitle="xxxx"
+              />
               <CardMedia
                 overlay={
                   <CardTitle title="Miku" subtitle="小提琴" />
@@ -22,19 +107,60 @@ class ItemDetail extends Component{
               >
                 <img src="http://puu.sh/kpNYq/e61a7c77ba.jpg" />
               </CardMedia>
-
-              <CardTitle title="item" />
-              <CardText>
-                目的棕色做梦都在怎么大门大麻素面大麻素的马斯的妈妈所得
-              </CardText>
+              <Card>
+                <CardHeader title="item"
+                            actAsExpander={true}
+                            showExpandableButton={true}
+                />
+                <CardText expandable={true}>
+                  这里是商品的一些简单描述
+                </CardText>
+                <CardActions expandable={true}>
+                  <FlatButton label="xxx"/>
+                  <FlatButton label="购买"
+                              linkButton={true}
+                              style={styles.button}
+                              href="https://github.com/borgnix/solid-winner"/>
+                </CardActions>
+              </Card>
             </Card>
           </Tab>
 
+
           <Tab label="商品详情" >
-            <div>
-              <h1> Tab2 </h1>
-            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableRowColumn>xxx</TableRowColumn>
+                  <TableRowColumn>xxx</TableRowColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                  {infos.map((info) =>(
+                    <TableRow selectable={false}>
+                      <TableRowColumn>zz</TableRowColumn>
+                      <TableRowColumn>{info.zz}</TableRowColumn>
+                    </TableRow>
+                  ))}
+
+              </TableBody>
+            </Table>
+            <GridList cols={1}
+              cellHeight={500}
+              style={styles.gridList}
+            >
+              {
+              tilesData.map((tile) => (
+                <GridTile
+                  titleBackground="linear-gradient(to bottom,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%),rgba(0,0,0,0) 100%)"
+                  cols={2}
+                >
+                  <img src={tile.img} />
+                </GridTile>
+              ))}
+            </GridList>
           </Tab>
+
 
           <Tab label="评论" >
             <div> </div>
