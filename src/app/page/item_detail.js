@@ -6,15 +6,18 @@ import {Card,
         CardText,
         CardActions,
         CardHeader} from 'material-ui/Card';
-import {GridList, GridTile} from 'material-ui/GridList'
-import FlatButton from 'material-ui/FlatButton'
-import {Table ,
+import {Table,
         TableBody,
         TableHeader,
         TableHeaderColumn,
         TableRow,
         TableRowColumn} from "material-ui/Table"
+import {GridList, GridTile} from 'material-ui/GridList'
+import FlatButton from 'material-ui/FlatButton'
 import {blue500} from 'material-ui/styles/colors'
+
+import {setTitle} from '../action/navigation'
+import {store} from '../app'
 
 const styles = {
   root: {
@@ -88,12 +91,16 @@ const infos = [
 ]
 
 class ItemDetail extends Component{
+  onComponentWillMount() {
+    store.dispatch(setTitle('SAPE: 电商平台'))
+  }
+
   render() {
     return(
       <div>
         <Tabs>
 
-          <Tab label="商品简介" >
+          <Tab label="简介" >
             <Card>
               <CardHeader title="图片"
                           titleColor={blue500}
@@ -127,7 +134,7 @@ class ItemDetail extends Component{
           </Tab>
 
 
-          <Tab label="商品详情" >
+          <Tab label="详情" >
             <Table>
               <TableHeader>
                 <TableRow>

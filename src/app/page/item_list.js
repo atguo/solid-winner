@@ -101,10 +101,11 @@ class ItemList extends Component {
     };
   }
 
-
+  onComponentWillMount() {
+    store.dispatch(setTitle('商品列表'));
+  }
 
   render() {
-    store.dispatch(setTitle('商品列表'));
     return <div style={this.styles.root}>
       <GridList
         style={this.styles.gridList}
