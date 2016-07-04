@@ -1,10 +1,10 @@
 {
-  "name": "material-ui-example-webpack",
+  "name": "solid-winner",
   "version": "0.15.0",
-  "description": "Sample project that uses Material-UI",
+  "description": "Stupid e-commerce site",
   "repository": {
     "type": "git",
-    "url": "https://github.com/callemall/material-ui.git"
+    "url": "https://github.com/brognix/solid-winner.git"
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack-dev-server.config.js --progress --inline --colors",
