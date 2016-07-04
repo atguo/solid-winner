@@ -97,7 +97,7 @@ const infos = [
 ]
 
 class ItemDetail extends Component{
-  onComponentWillMount() {
+  componentWillMount() {
     store.dispatch(setTitle('SAPE: 电商平台'))
   }
 

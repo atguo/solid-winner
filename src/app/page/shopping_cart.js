@@ -1,4 +1,7 @@
 import React, {Component} from 'react'
+import {setTitle} from '../action/navigation'
+import {store} from '../app'
+
 import Paper from 'material-ui/Paper';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
@@ -46,6 +49,10 @@ class CartChecker extends Component {
 }
 
 class ShoppingCart extends Component {
+  componentWillMount() {
+    store.dispatch(setTitle('购物车'));
+  }
+
   constructor(props) {
     super(props);
 
