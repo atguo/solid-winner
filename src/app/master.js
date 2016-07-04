@@ -102,7 +102,7 @@ class Master extends Component {
                   key='Search'
                   primaryText='搜索'
                   leftIcon={<ActionSearch />}
-                  href='/#/Home'
+                  href='/#/ItemList'
                 />
 
                 <ListItem
@@ -116,7 +116,7 @@ class Master extends Component {
                   key='Settings'
                   primaryText='设置'
                   leftIcon={<ActionSettings />}
-                  href='/#/Settings'
+                  href='/#/ItemDetail/Xxx'
                 />
               </div>
 
