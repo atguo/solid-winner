@@ -18,7 +18,7 @@ const itemInfo = [
     itemPrice: 3000,
   },
   {
-    itemNo: "1111",
+    itemNo: "12212",
     itemName:"Bicycle",
     itemImg:"http://placehold.it/300x300",
     itemIntro:"Bicycle is something that has two wheels and people can ride on.",
@@ -35,6 +35,7 @@ class CartItem extends Component {
     };
 
     this.handleNumberChange = (event) => {
+      event.stopPropagation();
       const number = parseInt(event.currentTarget.value, 10);
       if (!isNaN(number)) {
         this.setState({
@@ -44,17 +45,18 @@ class CartItem extends Component {
         this.props.onNumberChange(
           number,
           this.props.itemIndex
-        );
+        );z
       }
-      this.handleDeleteTouch = (event) => {
-        event.stopPropagation();
-        alert("deleted");
-      };
-    }
+    };
+
+    this.handleDeleteTouch = (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+    };
 
 
   }
-  
+
   render(){
     const {itemImage, itemIntro, itemName, itemIndex, itemPrice, ...other} = this.props;
     return  <TableRow {...other}>
@@ -69,9 +71,12 @@ class CartItem extends Component {
       <TableRowColumn>{itemPrice}</TableRowColumn>
       <TableRowColumn>
         <TextField
-          id={itemIndex}
           value={this.state.number}
-          onChange={this.handleNumberChange} />
+          onChange={this.handleNumberChange}
+          onClick={(event) => {
+                    event.stopPropagation();
+                    evemt.preventDefault();}}
+        />
       </TableRowColumn>
       <TableRowColumn>{itemPrice * this.state.number}</TableRowColumn>
       <TableRowColumn>
@@ -138,7 +143,8 @@ class ShoppingCart extends Component {
       <Table
         allRowsSelected={true}
         multiSelectable={true}>
-        <TableHeader>
+        <TableHeader
+          displaySelectAll>
           <TableRow>
             <TableHeaderColumn>Item</TableHeaderColumn>
             <TableHeaderColumn>Price</TableHeaderColumn>
@@ -150,6 +156,7 @@ class ShoppingCart extends Component {
         <TableBody>
           {itemInfo.map((item, index) => (
             <CartItem
+              key={item.itemNo}
               itemImage={item.itemImg}
               itemName={item.itemName}
               itemPrice={item.itemPrice}
