@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Title from 'react-title-component'
 import {connect} from 'react-redux';
+
 import update from 'immutability-helper'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -47,7 +48,13 @@ class Master extends Component {
             onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
             title={this.props.title}
             iconElementRight={
-              <IconButton>
+              <IconButton
+                onClick={
+                  () => {
+                    window.location.replace('/#/ShoppingCart')
+                  }
+                }
+              >
                 <ActionShoppingBasket />
               </IconButton>
             }
