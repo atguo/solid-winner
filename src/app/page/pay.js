@@ -3,9 +3,6 @@
  */
 import React from 'react';
 import {Card,
-    CardMedia,
-    CardTitle,
-    CardText,
     CardActions,
     CardHeader} from 'material-ui/Card';
 import {Table ,
@@ -16,18 +13,18 @@ import FlatButton from 'material-ui/FlatButton'
 import {Component} from 'react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-import TextField from 'material-ui/TextField'
+import TextField from 'material-ui/TextField';
+import {connect} from 'react-redux';
+import update from 'immutability-helper';
+
 
 
 const styles = {
-    container: {
-        width: "100%",
-    },
     position: {
         color: "0x986468" ,
         left: 0,
         right: 0,
-        position: "absolute"
+        position: "absolute",
     },
     button: {
         height: 50,
@@ -36,15 +33,26 @@ const styles = {
 };
 
 const address = [
-     "xxxxxx",
-     "zzzzzz",
-     "cccccc",
-     "aaaaaa",
-     "ssssss"
+    {
+        name: "x",
+        addr: "xx",
+    },
+    {
+        name: "z",
+        addr: "zzzzz",
+    },
+    {
+        name: "c",
+        addr: "cccc",
+    },
+    {
+        name: "a",
+        addr: "aaaa",
+    },
 ]
 const items = [];
 for (let i=0 ;i <address.length;i++){
-    items.push(<MenuItem value={i} primaryText={address[i]}/>);
+    items.push(<MenuItem value={i} label={address[i].name} primaryText={address[i].addr}/>);
 }
 
 
@@ -63,6 +71,7 @@ class Pay extends Component{
 
 
     render() {
+        console.log(this.props.items[0].itemPrice);
         return(
         <div>
             <Card>
@@ -74,7 +83,7 @@ class Pay extends Component{
                     <DropDownMenu value={this.state.value} onChange={this.handleChange}>
                         {items}
                     </DropDownMenu>
-                    <TextField value={address[this.state.value]}/>
+                    <TextField value={address[this.state.value].addr}/>
                 </CardActions>
             </Card>
             <Card>
@@ -99,22 +108,44 @@ class Pay extends Component{
                         <TableHeader displaySelectAll={false}>
                             <TableRow>
                                 <TableRowColumn>itemName</TableRowColumn>
-                                <TableRowColumn>Num</TableRowColumn>
-                                <TableRowColumn>price</TableRowColumn>
+                                <TableRowColumn>itemAmount</TableRowColumn>
+                                <TableRowColumn>Price</TableRowColumn>
                             </TableRow>
+                        </TableHeader>
+                        <TableHeader displaySelectAll={false}>
+                            {this.props.items.map((item) => (
+                                <TableRow>
+                                    <TableRowColumn>{item.itemName}</TableRowColumn>
+                                    <TableRowColumn>{item.itemAmount}</TableRowColumn>
+                                    <TableRowColumn>{parseInt(item.itemPrice*item.itemAmount, 10)}</TableRowColumn>
+                                </TableRow>
+                            ))}
                         </TableHeader>
                     </Table>
                 </CardActions>
             </Card>
-            <div style={styles.container}>
-                <FlatButton label="提交订单"
-                        linkButton={true}
-                        style={styles.position}
-                        href="https://github.com/borgnix/solid-winner"/>
-            </div>
+            <FlatButton label="提交订单"
+                    linkButton={true}
+                    style={styles.position}
+                    href="https://github.com/borgnix/solid-winner"/>
         </div>
         );
     };
 }
-export default Pay;
+
+const mapStateToProps = (state, props) => {
+    let cart = state.shopping_cart.cart;
+    let items = [];
+    for (let i=0; i < cart.length; i++) {
+        items.push({
+            itemNo: cart[i].itemNo,
+            itemName: "name",
+            itemAmount: cart[i].itemAmount,
+            itemPrice: 3000,
+        });
+    }
+    return update(props, {items: {$set: items}});
+};
+
+export default connect(mapStateToProps)(Pay);
 

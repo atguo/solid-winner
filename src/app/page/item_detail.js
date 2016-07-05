@@ -128,8 +128,6 @@ class ItemDetail extends Component{
                   这里是商品的一些简单描述
                 </CardText>
                 <CardActions expandable={true}>
-                  <div>
-                  </div>
                   <FlatButton label="加入购物车"
                               linkButton={true}
                               style={styles.button}

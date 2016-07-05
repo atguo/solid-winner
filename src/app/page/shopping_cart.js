@@ -10,7 +10,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import update from 'immutability-helper'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {deleteCartItem, changeCartItemAmount} from '../action/shopping_cart';
-import {store} from '../app'
 import {connect} from 'react-redux';
 
 const itemInfo = {
