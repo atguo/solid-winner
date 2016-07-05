@@ -173,7 +173,6 @@ class ItemDetail extends Component{
             </GridList>
           </Tab>
 
-
           <Tab label="评论" >
             <div> </div>
           </Tab>
