@@ -12,11 +12,11 @@ import Pay from './page/pay'
 const Routes = (
   <Router history={hashHistory} >
     <Route path='/' component={Master} >
-      <IndexRedirect to='/Home' />
-      <Route path='/Home' component={Home} />
-      <Route path='/ItemDetail' component={ItemDetail} />
-      <Route path='/ItemList' component={ItemList} />
-      <Route path='/ShoppingCart' component={ShoppingCart} />
+      <IndexRedirect to='Home' />
+      <Route path='Home' component={Home} />
+      <Route path='ItemDetail/:itemId' component={ItemDetail} />
+      <Route path='ItemList' component={ItemList} />
+      <Route path='ShoppingCart' component={ShoppingCart} />
       <Route path='Pay' component={Pay} />
 
     </Route>
