@@ -139,7 +139,7 @@ const mapStateToProps = (state, props) => {
     for (let i=0; i < cart.length; i++) {
         items.push({
             itemNo: cart[i].itemNo,
-            itemName: "name",
+            itemName: "name",  //name
             itemAmount: cart[i].itemAmount,
             itemPrice: 3000,
         });
