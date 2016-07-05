@@ -6,33 +6,32 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import update from 'immutability-helper'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import {addCartItem, changeCartItemAmount} from '../action/shopping_cart';
+import {deleteCartItem, changeCartItemAmount} from '../action/shopping_cart';
 import {store} from '../app'
 import {connect} from 'react-redux';
 
-const itemInfo = [
-  {
-    itemNo: "1111",
-    itemName:"Bicycle",
-    itemImg:"http://placehold.it/300x300",
-    itemIntro:"Bicycle is something that has two wheels and people can ride on.",
+const itemInfo = {
+  '1': {
+    itemName: "Bicycle",
+    itemImg: "http://placehold.it/300x300",
+    itemIntro: "Bicycle is something that has two wheels and people can ride on.",
     itemPrice: 3000,
   },
-  {
-    itemNo: "12212",
-    itemName:"Bicycle",
-    itemImg:"http://placehold.it/300x300",
-    itemIntro:"Bicycle is something that has two wheels and people can ride on.",
+  '2': {
+    itemName: "Bicycle",
+    itemImg: "http://placehold.it/300x300",
+    itemIntro: "Bicycle is something that has two wheels and people can ride on.",
     itemPrice: 3000,
   },
-];
+}
 
 class CartChecker extends Component {
   render() {
+    console.log(this.props.sum);
     return <Toolbar>
       <ToolbarGroup
         firstChild={true}>
-        Sum: {this.props.sum}
+        Sum: {this.props.sum === 0 ? "0" : this.props.sum}
 
       </ToolbarGroup>
       <ToolbarGroup>
@@ -48,41 +47,22 @@ class CartChecker extends Component {
 class ShoppingCart extends Component {
   constructor(props) {
     super(props);
-
-    this.onAmountChange = (event) => {
-      event.stopPropagation();
-      const amount = parseInt(event.currentTarget.value, 10);
-      const index = parseInt(event.currentTarget.name, 10);
-
-      if (!isNaN(amount)) {
-        store.dispatch(changeCartItemAmount(itemInfo[index].itemNo, amount));
-      }
-    }
-
-
-    this.onDeleteClick = (event) => {
-      event.stopPropagation();
-    }
-
-    this.onAmountClick = (event) => {
-      event.stopPropagation();
-      console.log(event);
-    }
-
   }
 
   render() {
-    let sum = itemInfo
-      .map((item) => (
-        item.itemPrice * this.props.amount[item.itemNo]))
+    console.log("Shopping Cart", this.props.amount);
+    let sum = this.props.itemNos
+      .map((itemNo) => (
+        itemInfo[itemNo].itemPrice * this.props.amount[itemNo]))
       .reduce((p, c) => (
         p + c
-      ));
+      ), 0);
+    console.log(sum);
     return <Paper>
     <Table
-      multiSelectable={true}>
+      selectable={false}>
       <TableHeader
-        enableSelectAll={true}>
+        displaySelectAll={false}>
         <TableRow>
           <TableHeaderColumn>Item</TableHeaderColumn>
           <TableHeaderColumn>Price</TableHeaderColumn>
@@ -92,9 +72,24 @@ class ShoppingCart extends Component {
         </TableRow>
       </TableHeader>
       <TableBody
-        deselectOnClickaway={false}>
-        {itemInfo.map((item, index) => (
-          <TableRow>
+        displayRowCheckbox={false}>
+
+        {this.props.itemNos.map((itemNo, index) => {
+          let item = itemInfo[itemNo];
+
+          let onDeleteClick = (event) => {
+            store.dispatch(deleteCartItem(itemNo))
+          };
+
+          let onAmountChange = (event) => {
+            const amount = parseInt(event.currentTarget.value, 10);
+
+            if (!isNaN(amount)) {
+              store.dispatch(changeCartItemAmount(itemNo, amount));
+            }
+          };
+
+          return <TableRow>
             <TableRowColumn>
               <div>
                 <img src={item.itemImg}/>
@@ -105,24 +100,23 @@ class ShoppingCart extends Component {
             <TableRowColumn>{item.itemPrice}</TableRowColumn>
             <TableRowColumn>
               <TextField
-                value={this.props.amount[item.itemNo]}
-                onChange={this.onAmountChange}
-                onClick={this.onAmountClick}
+                value={this.props.amount[itemNo]}
+                onChange={onAmountChange}
                 name={index}
                 />
             </TableRowColumn>
             <TableRowColumn>
-              {parseInt(this.props.amount[item.itemNo], 10) * item.itemPrice}
+              {parseInt(this.props.amount[itemNo], 10) * item.itemPrice}
             </TableRowColumn>
             <TableRowColumn>
               <FlatButton
                 label="Delete"
-                onClick={this.onDeleteClick}
-
+                id={index + 'delete'}
+                onClick={onDeleteClick}
               />
             </TableRowColumn>
           </TableRow>
-        ))}
+        })}
       </TableBody>
     </Table>
       <CartChecker
@@ -133,7 +127,12 @@ class ShoppingCart extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  return update(props, {amount: {$set: state.shopping_cart.cart}});
+  let cart = state.shopping_cart.cart;
+  let amount = {};
+  cart.forEach((item) => {
+    amount[item.itemNo] = item.itemAmount;
+  });
+  return update(props, {amount: {$set: amount}, itemNos: {$set: cart.map((item) => item.itemNo)}});
 };
 
 export default connect(mapStateToProps)(ShoppingCart);
