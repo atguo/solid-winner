@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import Paper from 'material-ui/Paper';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter} from 'material-ui/Table';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import update from 'immutability-helper'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-
-import ActionShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
+import {addCartItem, changeCartItemAmount} from '../action/shopping_cart';
+import {store} from '../app'
+import {connect} from 'react-redux';
 
 const itemInfo = [
   {
@@ -26,70 +27,6 @@ const itemInfo = [
   },
 ];
 
-class CartItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      number: 1,
-    };
-
-    this.handleNumberChange = (event) => {
-      event.stopPropagation();
-      const number = parseInt(event.currentTarget.value, 10);
-      if (!isNaN(number)) {
-        this.setState({
-          number: number,
-        });
-
-        this.props.onNumberChange(
-          number,
-          this.props.itemIndex
-        );z
-      }
-    };
-
-    this.handleDeleteTouch = (event) => {
-      event.stopPropagation();
-      event.preventDefault();
-    };
-
-
-  }
-
-  render(){
-    const {itemImage, itemIntro, itemName, itemIndex, itemPrice, ...other} = this.props;
-    return  <TableRow {...other}>
-      <TableRowColumn>
-        <div>
-          <img src={itemImage} />
-        </div>
-        <div>
-          <p>{itemName}: {itemIntro}</p>
-        </div>
-      </TableRowColumn>
-      <TableRowColumn>{itemPrice}</TableRowColumn>
-      <TableRowColumn>
-        <TextField
-          value={this.state.number}
-          onChange={this.handleNumberChange}
-          onClick={(event) => {
-                    event.stopPropagation();
-                    evemt.preventDefault();}}
-        />
-      </TableRowColumn>
-      <TableRowColumn>{itemPrice * this.state.number}</TableRowColumn>
-      <TableRowColumn>
-        <FlatButton
-          label="Delete"
-          onClick={this.handleDeleteTouch}
-        />
-      </TableRowColumn>
-
-    </TableRow>
-  }
-}
-
 class CartChecker extends Component {
   render() {
     return <Toolbar>
@@ -104,69 +41,90 @@ class CartChecker extends Component {
           primary={true}
         />
       </ToolbarGroup>
-      </Toolbar>
+    </Toolbar>
   }
-
 }
-
-
-
 
 class ShoppingCart extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      numbers: Array(itemInfo.length).fill(1),
-    };
+    this.onAmountChange = (event) => {
+      event.stopPropagation();
+      const amount = parseInt(event.currentTarget.value, 10);
+      const index = parseInt(event.currentTarget.name, 10);
 
-    this.onNumberChange = (number, index) => {
-      let instruct = {};
-      instruct[index] = {$set: number};
-      const arr = update(this.state.numbers, instruct);
-      console.log(arr['0']);
-      this.setState({
-        numbers: arr,
-      });
+      if (!isNaN(amount)) {
+        store.dispatch(changeCartItemAmount(itemInfo[index].itemNo, amount));
+      }
+    }
+
+
+    this.onDeleteClick = (event) => {
+      event.stopPropagation();
+    }
+
+    this.onAmountClick = (event) => {
+      event.stopPropagation();
+      console.log(event);
     }
 
   }
 
   render() {
-    const sum = itemInfo
-      .map((item, index) => (item.itemPrice * this.state.numbers[index]))
-      .reduce((p, c) => (p + c));
-
-    return <Paper
-        zDepth={1}
-      >
-      <Table
-        allRowsSelected={true}
-        multiSelectable={true}>
-        <TableHeader
-          displaySelectAll>
+    let sum = itemInfo
+      .map((item) => (
+        item.itemPrice * this.props.amount[item.itemNo]))
+      .reduce((p, c) => (
+        p + c
+      ));
+    return <Paper>
+    <Table
+      multiSelectable={true}>
+      <TableHeader
+        enableSelectAll={true}>
+        <TableRow>
+          <TableHeaderColumn>Item</TableHeaderColumn>
+          <TableHeaderColumn>Price</TableHeaderColumn>
+          <TableHeaderColumn>Amount</TableHeaderColumn>
+          <TableHeaderColumn>Sum</TableHeaderColumn>
+          <TableHeaderColumn>Operation</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+      <TableBody
+        deselectOnClickaway={false}>
+        {itemInfo.map((item, index) => (
           <TableRow>
-            <TableHeaderColumn>Item</TableHeaderColumn>
-            <TableHeaderColumn>Price</TableHeaderColumn>
-            <TableHeaderColumn>Number</TableHeaderColumn>
-            <TableHeaderColumn>Sum</TableHeaderColumn>
-            <TableHeaderColumn>Action</TableHeaderColumn>
+            <TableRowColumn>
+              <div>
+                <img src={item.itemImg}/>
+                <p>{item.itemName}</p>
+                <p>{item.itemIntro}</p>
+              </div>
+            </TableRowColumn>
+            <TableRowColumn>{item.itemPrice}</TableRowColumn>
+            <TableRowColumn>
+              <TextField
+                value={this.props.amount[item.itemNo]}
+                onChange={this.onAmountChange}
+                onClick={this.onAmountClick}
+                name={index}
+                />
+            </TableRowColumn>
+            <TableRowColumn>
+              {parseInt(this.props.amount[item.itemNo], 10) * item.itemPrice}
+            </TableRowColumn>
+            <TableRowColumn>
+              <FlatButton
+                label="Delete"
+                onClick={this.onDeleteClick}
+
+              />
+            </TableRowColumn>
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {itemInfo.map((item, index) => (
-            <CartItem
-              key={item.itemNo}
-              itemImage={item.itemImg}
-              itemName={item.itemName}
-              itemPrice={item.itemPrice}
-              itemIntro={item.itemIntro}
-              itemIndex={index}
-              onNumberChange={this.onNumberChange}
-            />
-          ))}
-        </TableBody>
-      </Table>
+        ))}
+      </TableBody>
+    </Table>
       <CartChecker
         sum={sum}
         />
@@ -174,4 +132,8 @@ class ShoppingCart extends Component {
   }
 }
 
-export default ShoppingCart;
+const mapStateToProps = (state, props) => {
+  return update(props, {amount: {$set: state.shopping_cart.cart}});
+};
+
+export default connect(mapStateToProps)(ShoppingCart);
