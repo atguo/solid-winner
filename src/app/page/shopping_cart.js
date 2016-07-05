@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux';
 import {setTitle} from '../action/navigation'
 import {store} from '../app'
 
@@ -9,9 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import update from 'immutability-helper'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import {deleteCartItem, changeCartItemAmount} from '../action/shopping_cart';
-import {store} from '../app'
-import {connect} from 'react-redux';
+import {addCartItem, changeCartItemAmount} from '../action/shopping_cart';
 
 const itemInfo = {
   '1': {

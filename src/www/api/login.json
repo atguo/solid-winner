@@ -1,0 +1,7 @@
+{
+  "status": "success",
+  "result": {
+    "token": 2333,
+    "username": "TestUser"
+  }
+}
