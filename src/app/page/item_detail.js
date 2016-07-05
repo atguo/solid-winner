@@ -34,8 +34,14 @@ const styles = {
   },
   button: {
     height: 50,
-    width: 90,
+    width: 120,
   },
+  fontLeft: {
+    paddingLeft: 96,
+  },
+  fontRight: {
+    paddingLeft: 60,
+  }
 };
 
 const tilesData = [
@@ -124,7 +130,7 @@ class ItemDetail extends Component{
                 </CardText>
                 <CardActions expandable={true}>
                   <FlatButton label="xxx"/>
-                  <FlatButton label="购买"
+                  <FlatButton label="加入购物车"
                               linkButton={true}
                               style={styles.button}
                               href="https://github.com/borgnix/solid-winner"/>
@@ -136,20 +142,19 @@ class ItemDetail extends Component{
 
           <Tab label="详情" >
             <Table>
-              <TableHeader>
+              <TableHeader displaySelectAll={false}>
                 <TableRow>
                   <TableRowColumn>xxx</TableRowColumn>
                   <TableRowColumn>xxx</TableRowColumn>
                 </TableRow>
               </TableHeader>
-              <TableBody>
-                  {infos.map((info) =>(
-                    <TableRow selectable={false}>
-                      <TableRowColumn>zz</TableRowColumn>
-                      <TableRowColumn>{info.zz}</TableRowColumn>
+              <TableBody displayRowCheckbox={false}>
+                  {infos.map((info) => (
+                    <TableRow selectable={false} >
+                      <TableRowColumn style={styles.fontLeft}>zz</TableRowColumn>
+                      <TableRowColumn style={styles.fontRight}>{info.zz}</TableRowColumn>
                     </TableRow>
                   ))}
-
               </TableBody>
             </Table>
             <GridList cols={1}
