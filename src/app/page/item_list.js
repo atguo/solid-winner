@@ -101,7 +101,7 @@ class ItemList extends Component {
     };
   }
 
-  onComponentWillMount() {
+  componentWillMount() {
     store.dispatch(setTitle('商品列表'));
   }
 
