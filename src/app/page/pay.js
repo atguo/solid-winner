@@ -6,6 +6,7 @@ import {Card,
     CardActions,
     CardHeader} from 'material-ui/Card';
 import {Table ,
+    TableBody,
     TableHeader,
     TableRow,
     TableRowColumn} from "material-ui/Table"
@@ -112,15 +113,15 @@ class Pay extends Component{
                                 <TableRowColumn>Price</TableRowColumn>
                             </TableRow>
                         </TableHeader>
-                        <TableHeader displaySelectAll={false}>
+                        <TableBody displayRowCheckBox={false}>
                             {this.props.items.map((item) => (
-                                <TableRow>
+                                <TableRow selectable={false}>
                                     <TableRowColumn>{item.itemName}</TableRowColumn>
                                     <TableRowColumn>{item.itemAmount}</TableRowColumn>
                                     <TableRowColumn>{parseInt(item.itemPrice*item.itemAmount, 10)}</TableRowColumn>
                                 </TableRow>
                             ))}
-                        </TableHeader>
+                        </TableBody>
                     </Table>
                 </CardActions>
             </Card>
