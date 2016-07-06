@@ -108,7 +108,7 @@ class ShoppingCart extends Component {
                 value={this.props.amount[itemNo]}
                 onChange={onAmountChange}
                 name={index}
-                />
+              />
             </TableRowColumn>
             <TableRowColumn>
               {parseInt(this.props.amount[itemNo], 10) * item.itemPrice}

@@ -8,6 +8,7 @@ import ItemDetail from './page/item_detail'
 import ItemList from './page/item_list'
 import ShoppingCart from './page/shopping_cart'
 import Pay from './page/pay'
+import Register from './page/register'
 
 const Routes = (
   <Router history={hashHistory} >
@@ -18,6 +19,7 @@ const Routes = (
       <Route path='ItemList(/query/:query)(/sortBy/:sortBy)(/filterBy/:filterBy)' component={ItemList} />
       <Route path='ShoppingCart' component={ShoppingCart} />
       <Route path='Pay' component={Pay} />
+      <Route path='Register' component={Register} />
 
     </Route>
   </Router>

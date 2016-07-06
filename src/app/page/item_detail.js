@@ -137,7 +137,6 @@ class ItemDetail extends Component{
             </Card>
           </Tab>
 
-
           <Tab label="详情" >
             <Table>
               <TableHeader displaySelectAll={false}>
