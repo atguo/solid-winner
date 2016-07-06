@@ -9,13 +9,11 @@ import {Card,
 import {Table,
         TableBody,
         TableHeader,
-        TableHeaderColumn,
         TableRow,
         TableRowColumn} from "material-ui/Table"
 import {GridList, GridTile} from 'material-ui/GridList'
 import FlatButton from 'material-ui/FlatButton'
 import {blue500} from 'material-ui/styles/colors'
-
 import {setTitle} from '../action/navigation'
 import {store} from '../app'
 
@@ -41,7 +39,7 @@ const styles = {
   },
   fontRight: {
     paddingLeft: 60,
-  }
+  },
 };
 
 const tilesData = [
@@ -101,6 +99,7 @@ class ItemDetail extends Component{
     store.dispatch(setTitle('SAPE: 电商平台'))
   }
 
+
   render() {
     return(
       <div>
@@ -129,7 +128,6 @@ class ItemDetail extends Component{
                   这里是商品的一些简单描述
                 </CardText>
                 <CardActions expandable={true}>
-                  <FlatButton label="xxx"/>
                   <FlatButton label="加入购物车"
                               linkButton={true}
                               style={styles.button}
