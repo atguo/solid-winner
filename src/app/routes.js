@@ -15,7 +15,7 @@ const Routes = (
       <IndexRedirect to='Home' />
       <Route path='Home' component={Home} />
       <Route path='ItemDetail/:itemId' component={ItemDetail} />
-      <Route path='ItemList' component={ItemList} />
+      <Route path='ItemList(/query/:query)(/sortBy/:sortBy)(/filterBy/:filterBy)' component={ItemList} />
       <Route path='ShoppingCart' component={ShoppingCart} />
       <Route path='Pay' component={Pay} />
 

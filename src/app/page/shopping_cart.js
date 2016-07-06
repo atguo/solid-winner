@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux';
 import {setTitle} from '../action/navigation'
 import {store} from '../app'
+import {connect} from 'react-redux';
+import {deleteCartItem, changeCartItemAmount} from '../action/shopping_cart';
 
 import Paper from 'material-ui/Paper';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
@@ -10,7 +11,6 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import update from 'immutability-helper'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import {addCartItem, changeCartItemAmount} from '../action/shopping_cart';
 
 const itemInfo = {
   '1': {
@@ -29,11 +29,9 @@ const itemInfo = {
 
 class CartChecker extends Component {
   render() {
-    console.log(this.props.sum);
     return <Toolbar>
-      <ToolbarGroup
-        firstChild={true}>
-        Sum: {this.props.sum === 0 ? "0" : this.props.sum}
+      <ToolbarGroup>
+        <ToolbarTitle text={this.props.sum === 0 ? "0" : this.props.sum} />
 
       </ToolbarGroup>
       <ToolbarGroup>
@@ -53,17 +51,18 @@ class ShoppingCart extends Component {
 
   constructor(props) {
     super(props);
+    
   }
 
   render() {
-    console.log("Shopping Cart", this.props.amount);
     let sum = this.props.itemNos
       .map((itemNo) => (
         itemInfo[itemNo].itemPrice * this.props.amount[itemNo]))
       .reduce((p, c) => (
         p + c
       ), 0);
-    console.log(sum);
+    
+    
     return <Paper>
     <Table
       selectable={false}>
