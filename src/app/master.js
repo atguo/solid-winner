@@ -3,7 +3,6 @@ import Title from 'react-title-component'
 import {connect} from 'react-redux';
 import update from 'immutability-helper'
 
-import * as accountAction from './action/account'
 import UserInfo from './component/user_info'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -33,7 +32,7 @@ class Master extends Component {
       });
     };
 
-    this.handleChangeRequestNavDrawer = (open) => {
+    this.handleSetNavDrawerOpen = (open) => {
       this.setState({
         navDrawerOpen: open,
       });
@@ -64,12 +63,16 @@ class Master extends Component {
           <Drawer
             open={this.state.navDrawerOpen}
             docked={false}
-            onRequestChange={this.handleChangeRequestNavDrawer}
+            onRequestChange={this.handleSetNavDrawerOpen}
           >
             <List>
               <ListItem
                 disabled={true}
-                children={<UserInfo />}
+                children={
+                  <UserInfo
+                    handleSetNavDrawerOpen={this.handleSetNavDrawerOpen}
+                  />
+                }
               />
 
               <div

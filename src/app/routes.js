@@ -20,7 +20,6 @@ const Routes = (
       <Route path='ShoppingCart' component={ShoppingCart} />
       <Route path='Pay' component={Pay} />
       <Route path='Register' component={Register} />
-
     </Route>
   </Router>
 );

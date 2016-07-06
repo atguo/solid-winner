@@ -19,7 +19,7 @@ class UserInfo extends Component {
       loginDialogOpen: false,
     };
 
-    this.handleLoginDialogOpen = (state) => {
+    this.handleSetLoginDialogOpen = (state) => {
       this.setState({loginDialogOpen: state});
     }
   }
@@ -41,19 +41,21 @@ class UserInfo extends Component {
 
     if (this.props.status == 'logged in') {
       logInOutButton = (
-        <RaisedButton
-          label='登出'
-          primary={true}
-          onClick={this.props.onLogout}
-        />
+        <div>
+          <RaisedButton
+            label='登出'
+            primary={true}
+            onClick={this.props.onLogout}
+          />
+      </div>
       );
     } else {
       logInOutButton = (
         <div>
           <RaisedButton
-            label='登录'
+            label='登录 / 注册'
             primary={true}
-            onClick={() => { this.handleLoginDialogOpen(true); }}
+            onClick={() => { this.handleSetLoginDialogOpen(true); }}
           />
           <Dialog
             title='登录失败'
@@ -92,9 +94,20 @@ class UserInfo extends Component {
       <Dialog
         title='登录'
         open={this.state.loginDialogOpen}
-        onRequestClose={() => this.handleLoginDialogOpen(false)}
+        onRequestClose={() => this.handleSetLoginDialogOpen(false)}
         contentStyle={{width: 400}}
         actions={[
+          <FlatButton
+            label='注册'
+            secondary={true}
+            onClick={
+              () => {
+                window.location.replace('/#/Register');
+                this.props.handleSetNavDrawerOpen(false);
+                this.handleSetLoginDialogOpen(false);
+              }
+            }
+          />,
           <FlatButton
             label='登录'
             primary={true}
@@ -104,13 +117,13 @@ class UserInfo extends Component {
                   username: this.state.username,
                   password: this.state.password
                 }, accountAction.LOGIN_RESP);
-                this.handleLoginDialogOpen(false);
+                this.handleSetLoginDialogOpen(false);
               }
             }
           />,
         <FlatButton
           label='取消'
-          onClick={() => {this.handleLoginDialogOpen(false)}}
+          onClick={() => {this.handleSetLoginDialogOpen(false)}}
         />
         ]}
       >
