@@ -16,6 +16,7 @@ import FlatButton from 'material-ui/FlatButton'
 import {blue500} from 'material-ui/styles/colors'
 import {setTitle} from '../action/navigation'
 import {store} from '../app'
+import {addCartItem} from '../action/shopping_cart'
 
 const styles = {
   root: {
@@ -80,31 +81,19 @@ const infos = [
   {
     zz: "xxx"
   },
-  {
-    zz: "xxx"
-  },
-  {
-    zz: "xxx"
-  },
-  {
-    zz: "xxx"
-  },
-  {
-    zz: "xxx"
-  },
 ]
 
 class ItemDetail extends Component{
   componentWillMount() {
     store.dispatch(setTitle('SAPE: 电商平台'))
   }
-
+  
 
   render() {
+    console.log(this.props.itemNo);
     return(
       <div>
         <Tabs>
-
           <Tab label="简介" >
             <Card>
               <CardHeader title="图片"
@@ -129,9 +118,9 @@ class ItemDetail extends Component{
                 </CardText>
                 <CardActions expandable={true}>
                   <FlatButton label="加入购物车"
-                              linkButton={true}
                               style={styles.button}
-                              href="https://github.com/borgnix/solid-winner"/>
+                              onClick={this.props.onAddItemToCart} 
+                  />
                 </CardActions>
               </Card>
             </Card>
@@ -177,6 +166,15 @@ class ItemDetail extends Component{
       </Tabs>
     </div>
     );
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddItemToCart: () => {
+
+      addCartItem(this.props.itemNo);
+    }
   }
 }
 
