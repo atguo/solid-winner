@@ -100,7 +100,7 @@ class Register extends Component {
       }
     };
 
-    this.handleChildStageChange = (key, value) => {
+    this.handleChildStateChange = (key, value) => {
       let msg = '';
       switch (key) {
         case 'username': {
@@ -126,9 +126,7 @@ class Register extends Component {
       updatedState[key] = value;
       this.setState(updatedState);
 
-      let isAllFieldsValid =
-      updatedState = {isAllFieldsValid};
-      this.setState(updatedState);
+
     }
 
     this.getStepContent = () => {
@@ -138,7 +136,7 @@ class Register extends Component {
         case 1:
           return (
             <InfoCard
-              onChange={this.handleChildStageChange}
+              onChange={this.handleChildStateChange}
               passwordError={this.state.passwordError}
               usernameError={this.state.usernameError}
               emailError={this.state.emailError}

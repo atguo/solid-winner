@@ -9,3 +9,4 @@ export const logout = () => {
 export const confirmLoginError = () => {
   return {type: CONFIRM_LOGIN_ERROR};
 }
+ 

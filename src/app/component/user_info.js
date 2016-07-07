@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import update from 'immutability-helper'
-
+import {store} from '../app'
 import call from '../api'
 import * as accountAction from '../action/account'
 
@@ -116,7 +116,10 @@ class UserInfo extends Component {
                 call('login', {
                   username: this.state.username,
                   password: this.state.password
-                }, accountAction.LOGIN_RESP);
+                }, (data, err) => {
+                  store.dispatch({type: accountAction.LOGIN_RESP,
+                                    data: data})
+                });
                 this.handleSetLoginDialogOpen(false);
               }
             }

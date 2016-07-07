@@ -1,4 +1,10 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import update from 'immutability-helper'
+import {store} from '../app'
+
+import call from '../api'
+
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {Card,
         CardMedia,
@@ -15,8 +21,9 @@ import {GridList, GridTile} from 'material-ui/GridList'
 import FlatButton from 'material-ui/FlatButton'
 import {blue500} from 'material-ui/styles/colors'
 import {setTitle} from '../action/navigation'
-import {store} from '../app'
+
 import {addCartItem} from '../action/shopping_cart'
+
 
 const styles = {
   root: {
@@ -84,23 +91,27 @@ const infos = [
 ]
 
 class ItemDetail extends Component{
+  constructor(props) {
+    super(props);
+    
+    
+  }
+
   componentWillMount() {
     store.dispatch(setTitle('SAPE: 电商平台'))
   }
   
 
   render() {
-    console.log(this.props.itemNo);
+    if(this.state == null){
+      
+    }
+  
     return(
       <div>
         <Tabs>
           <Tab label="简介" >
             <Card>
-              <CardHeader title="图片"
-                          titleColor={blue500}
-                          avatar="http://loempixel.com/100/100nature/"
-                          subtitle="xxxx"
-              />
               <CardMedia
                 overlay={
                   <CardTitle title="Miku" subtitle="小提琴" />
@@ -172,10 +183,9 @@ class ItemDetail extends Component{
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddItemToCart: () => {
-
       addCartItem(this.props.itemNo);
     }
   }
 }
 
-export default ItemDetail;
+export default connect(mapDispatchToProps)(ItemDetail);

@@ -1,23 +1,15 @@
 import fetch from 'isomorphic-fetch'
-import {store} from './app'
 
-const call = (name, data, actionType) => {
+const call = (name, data, callback) => {
   fetch('api/' + name + '.json')
     .then(resp => resp.json())
     .then(json => {
-      if (actionType) {
-        store.dispatch({
-          type: actionType,
-          data: json
-        });
+      if (callback) {
+        callback(json, null);
       }
     }).catch(error => {
-      if (actionType) {
-        store.dispatch({
-          type: actionType,
-          data: null,
-          error
-        });
+      if (callback) {
+        callback(null, error);
       }
     });
 }
