@@ -118,7 +118,7 @@ class UserInfo extends Component {
                   password: this.state.password
                 }, (data, err) => {
                   store.dispatch({type: accountAction.LOGIN_RESP,
-                                    data: data})
+                                  data: data})
                 });
                 this.handleSetLoginDialogOpen(false);
               }

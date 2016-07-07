@@ -6,6 +6,7 @@ const call = (name, data, callback) => {
     .then(json => {
       if (callback) {
         callback(json, null);
+        
       }
     }).catch(error => {
       if (callback) {

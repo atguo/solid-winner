@@ -2,25 +2,25 @@ export const ADD_CART_ITEM = 'ADD_CART_ITEM';
 export const CHANGE_CART_ITEM_AMOUNT = 'CHANGE_CART_ITEM_NUM';
 export const DELETE_CART_ITEM = 'DELETE_CART_ITEM';
 
-export const addCartItem = (itemNo) => {
+export const addCartItem = (itemID) => {
   return {
     type: ADD_CART_ITEM,
-    itemNo
+    itemID
   }
 };
 
-export const changeCartItemAmount = (itemNo, itemAmount) => {
+export const changeCartItemAmount = (itemID, itemAmount) => {
   return {
     type: CHANGE_CART_ITEM_AMOUNT,
-    itemNo,
+    itemID,
     itemAmount,
   }
 };
 
-export const deleteCartItem = (itemNo) => {
+export const deleteCartItem = (itemID) => {
   return {
     type: DELETE_CART_ITEM,
-    itemNo,
+    itemID,
   }
 };
 

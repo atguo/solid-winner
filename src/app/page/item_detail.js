@@ -90,102 +90,115 @@ const infos = [
   },
 ]
 
+
 class ItemDetail extends Component{
   constructor(props) {
     super(props);
-    
-    
+
+    this.state = {
+      data: null,
+    }
+  }
+
+  getData() {
+    console.log(this.state);
+    if(this.state.data == null) {
+      this.setState({itemID: this.props.params.itemID})
+      //TO DO: request itemID info
+      call('itemDetail',
+          {itemID: this.state.itemID},
+          (data,error) => {
+            console.log('data', data,error);
+            this.setState(data.details);
+
+          }
+      )
+
+    }
   }
 
   componentWillMount() {
-    store.dispatch(setTitle('SAPE: 电商平台'))
+    this.getData();
+    store.dispatch(setTitle('SAPE: 电商平台'));
   }
-  
+
+
 
   render() {
-    if(this.state == null){
-      
-    }
-  
-    return(
-      <div>
-        <Tabs>
-          <Tab label="简介" >
-            <Card>
-              <CardMedia
-                overlay={
-                  <CardTitle title="Miku" subtitle="小提琴" />
-                }
-              >
-                <img src="http://puu.sh/kpNYq/e61a7c77ba.jpg" />
-              </CardMedia>
-              <Card>
-                <CardHeader title="item"
-                            actAsExpander={true}
-                            showExpandableButton={true}
-                />
-                <CardText expandable={true}>
-                  这里是商品的一些简单描述
-                </CardText>
-                <CardActions expandable={true}>
-                  <FlatButton label="加入购物车"
-                              style={styles.button}
-                              onClick={this.props.onAddItemToCart} 
-                  />
-                </CardActions>
-              </Card>
-            </Card>
-          </Tab>
+      return (
+          <div>
+            <Tabs>
+              <Tab label="简介">
+                <Card>
+                  <CardMedia
+                      overlay={
+                    <CardTitle title={this.state.picName} subtitle={this.state.picSubTitle} />
+                  }
+                  >
+                    <img src={this.state.itemURL}/>
+                  </CardMedia>
+                  <Card>
+                    <CardHeader title={this.state.itemName}
+                                actAsExpander={true}
+                                showExpandableButton={true}
+                    />
+                    <CardText expandable={true}>
+                      {this.state.itemInfo}
+                    </CardText>
+                    <CardActions expandable={true}>
+                      <FlatButton label="加入购物车"
+                                  style={styles.button}
+                                  onClick={()=> {
+                                    store.dispatch(addCartItem(this.props.params.itemID))}}
 
-          <Tab label="详情" >
-            <Table>
-              <TableHeader displaySelectAll={false}>
-                <TableRow>
-                  <TableRowColumn>xxx</TableRowColumn>
-                  <TableRowColumn>xxx</TableRowColumn>
-                </TableRow>
-              </TableHeader>
-              <TableBody displayRowCheckbox={false}>
-                  {infos.map((info) => (
-                    <TableRow selectable={false} >
-                      <TableRowColumn style={styles.fontLeft}>zz</TableRowColumn>
-                      <TableRowColumn style={styles.fontRight}>{info.zz}</TableRowColumn>
+                      />
+                    </CardActions>
+                  </Card>
+                </Card>
+              </Tab>
+
+              <Tab label="详情">
+                <Table>
+                  <TableHeader displaySelectAll={false}>
+                    <TableRow>
+                      <TableRowColumn>xxx</TableRowColumn>
+                      <TableRowColumn>xxx</TableRowColumn>
                     </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-            <GridList cols={1}
-              cellHeight={500}
-              style={styles.gridList}
-            >
-              {
-              tilesData.map((tile) => (
-                <GridTile
-                  titleBackground="linear-gradient(to bottom,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%),rgba(0,0,0,0) 100%)"
-                  cols={2}
+                  </TableHeader>
+                  <TableBody displayRowCheckbox={false}>
+                    {infos.map((info) => (
+                        <TableRow selectable={false}>
+                          <TableRowColumn style={styles.fontLeft}>zz</TableRowColumn>
+                          <TableRowColumn style={styles.fontRight}>{info.zz}</TableRowColumn>
+                        </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <GridList cols={1}
+                          cellHeight={500}
+                          style={styles.gridList}
                 >
-                  <img src={tile.img} />
-                </GridTile>
-              ))}
-            </GridList>
-          </Tab>
+                  {
+                    tilesData.map((tile) => (
+                        <GridTile
+                            titleBackground="linear-gradient(to bottom,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%),rgba(0,0,0,0) 100%)"
+                            cols={2}
+                        >
+                          <img src={tile.img}/>
+                        </GridTile>
+                    ))}
+                </GridList>
+              </Tab>
 
-          <Tab label="评论" >
-            <div> </div>
-          </Tab>
+              <Tab label="评论">
+                <div></div>
+              </Tab>
 
-      </Tabs>
-    </div>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAddItemToCart: () => {
-      addCartItem(this.props.itemNo);
+            </Tabs>
+          </div>
+      );
     }
-  }
 }
 
-export default connect(mapDispatchToProps)(ItemDetail);
+
+export default ItemDetail;
