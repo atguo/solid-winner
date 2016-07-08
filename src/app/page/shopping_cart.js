@@ -27,17 +27,25 @@ const itemInfo = {
   },
 }
 
+const style = {
+  itemColumnStyle: {
+    width: "50%",
+    verticalAlign: "start"
+  }
+}
+
 class CartChecker extends Component {
   render() {
     return <Toolbar>
       <ToolbarGroup>
-        <ToolbarTitle text={this.props.sum === 0 ? "0" : this.props.sum} />
-
+        <ToolbarTitle text={this.props.sum === 0 ? "0" : "总价: " + this.props.sum} />
       </ToolbarGroup>
       <ToolbarGroup>
         <RaisedButton
-          label="Check"
+          label="结帐"
           primary={true}
+          linkButton={true}
+          href="/#/pay"
         />
       </ToolbarGroup>
     </Toolbar>
@@ -51,35 +59,9 @@ class ShoppingCart extends Component {
 
   constructor(props) {
     super(props);
-    
-  }
 
-  render() {
-    let sum = this.props.itemIDs
-      .map((itemID) => (
-        itemInfo[itemID].itemPrice * this.props.amount[itemID]))
-      .reduce((p, c) => (
-        p + c
-      ), 0);
-    
-    
-    return <Paper>
-    <Table
-      selectable={false}>
-      <TableHeader
-        displaySelectAll={false}>
-        <TableRow>
-          <TableHeaderColumn>Item</TableHeaderColumn>
-          <TableHeaderColumn>Price</TableHeaderColumn>
-          <TableHeaderColumn>Amount</TableHeaderColumn>
-          <TableHeaderColumn>Sum</TableHeaderColumn>
-          <TableHeaderColumn>Operation</TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-      <TableBody
-        displayRowCheckbox={false}>
-
-        {this.props.itemIDs.map((itemID, index) => {
+    this.TableRows = ()=> (
+        this.props.itemIDs.map((itemID, index) => {
           let item = itemInfo[itemID];
 
           let onDeleteClick = (event) => {
@@ -95,33 +77,74 @@ class ShoppingCart extends Component {
           };
 
           return <TableRow>
-            <TableRowColumn>
+            <TableRowColumn style={style.itemColumnStyle}>
               <div>
-                <img src={item.itemImg}/>
-                <p>{item.itemName}</p>
-                <p>{item.itemIntro}</p>
+                <img src={item.itemImg}
+                     style={{display:"inline-block",
+                             width: 100, height: 100, margin: 5}}/>
+                <div style={{display:"inline-block", verticalAlign:"top", margin: 5}}>
+                  <h1 style={{fontSize:"20", fontWeight:"400"}}>{item.itemName}</h1>
+                  <p>{item.itemIntro}</p>
+                </div>
               </div>
             </TableRowColumn>
-            <TableRowColumn>{item.itemPrice}</TableRowColumn>
+
+            <TableRowColumn>
+              {item.itemPrice}
+            </TableRowColumn>
+
             <TableRowColumn>
               <TextField
-                value={this.props.amount[itemID]}
-                onChange={onAmountChange}
-                name={index}
+                  value={this.props.amount[itemID]}
+                  onChange={onAmountChange}
+                  name={index}
               />
             </TableRowColumn>
+
             <TableRowColumn>
               {parseInt(this.props.amount[itemID], 10) * item.itemPrice}
             </TableRowColumn>
+
             <TableRowColumn>
               <FlatButton
-                label="Delete"
-                id={index + 'delete'}
-                onClick={onDeleteClick}
+                  label="删除"
+                  id={index + 'delete'}
+                  onClick={onDeleteClick}
               />
             </TableRowColumn>
           </TableRow>
-        })}
+        })
+    )
+  }
+
+  render() {
+    let sum = this.props.itemIDs
+      .map((itemID) => (
+        itemInfo[itemID].itemPrice * this.props.amount[itemID]))
+      .reduce((p, c) => (
+        p + c
+      ), 0);
+    
+    
+    return <Paper>
+    <Table
+      selectable={false}>
+      <TableHeader
+        adjustForCheckbox={false}
+        displaySelectAll={false}>
+        <TableRow>
+          <TableHeaderColumn style={style.itemColumnStyle}>商品</TableHeaderColumn>
+          <TableHeaderColumn>价格</TableHeaderColumn>
+          <TableHeaderColumn>数量</TableHeaderColumn>
+          <TableHeaderColumn>总价</TableHeaderColumn>
+          <TableHeaderColumn>操作</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+      <TableBody
+        displayRowCheckbox={false}>
+
+        {this.TableRows()}
+
       </TableBody>
     </Table>
       <CartChecker
