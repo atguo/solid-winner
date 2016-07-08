@@ -1,0 +1,69 @@
+{
+
+  "components": [
+    {
+      "type": "category"
+    }, {
+      "type": "pic",
+      "img": "http://www.baidu.com/img/bd_logo1.png",
+      "link": "/#/Pay",
+      "style": {
+        "width": "100%"
+      }
+    }, {
+      "type": "card",
+      "title": "猜你喜欢",
+      "subtitle": "",
+      "items": [
+        {
+          "img": "http://placehold.it/300x300",
+          "title": "Breakfast",
+          "price": "30$",
+          "intro": "jill111"
+        },
+        {
+          "img": "http://placehold.it/300x300",
+          "title": "Tasty burger",
+          "price": "30$",
+          "intro": "pashminu"
+        },
+        {
+          "img": "http://placehold.it/300x300",
+          "title": "Camera",
+          "price": "30$",
+          "intro": "Danson67"
+        },
+        {
+          "img": "http://placehold.it/300x300",
+          "title": "Morning",
+          "price": "30$",
+          "intro": "fancycrave1"
+        },
+        {
+          "img": "http://placehold.it/300x300",
+          "title": "Hats",
+          "price": "30$",
+          "intro": "Hans"
+        },
+        {
+          "img": "http://placehold.it/300x300",
+          "title": "Honey",
+          "price": "30$",
+          "intro": "fancycravel"
+        },
+        {
+          "img": "http://placehold.it/300x300",
+          "title": "Vegetables",
+          "price": "30$",
+          "intro": "jill111"
+        },
+        {
+          "img": "http://placehold.it/300x300",
+          "title": "Water plant",
+          "price": "30$",
+          "intro": "BkrmadtyaKarki"
+        }
+      ]
+    }
+  ]
+}

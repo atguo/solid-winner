@@ -11,7 +11,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import {List, ListItem} from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import ActionShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
 
