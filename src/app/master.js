@@ -10,7 +10,6 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import ActionShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
 
