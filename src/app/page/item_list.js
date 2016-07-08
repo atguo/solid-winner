@@ -12,59 +12,10 @@ import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import {setTitle} from '../action/navigation';
 import RaisedButton from 'material-ui/RaisedButton';
-import update from 'immutability-helper'
+import CircularProgress from 'material-ui/CircularProgress';
+import update from 'immutability-helper';
+import call from "../api";
 
-const tilesData = [
-  {
-    img: 'http://placehold.it/300x300',
-    title: 'Breakfast',
-    price: "30$",
-    author: 'jill111',
-  },
-  {
-    img: 'http://placehold.it/300x300',
-    title: 'Tasty burger',
-    price: "30$",
-    author: 'pashminu',
-  },
-  {
-    img: 'http://placehold.it/300x300',
-    title: 'Camera',
-    price: "30$",
-
-    author: 'Danson67',
-  },
-  {
-    img: 'http://placehold.it/300x300',
-    title: 'Morning',
-    price: "30$",
-    author: 'fancycrave1',
-  },
-  {
-    img: 'http://placehold.it/300x300',
-    title: 'Hats',
-    price: "30$",
-    author: 'Hans',
-  },
-  {
-    img: 'http://placehold.it/300x300',
-    title: 'Honey',
-    price: "30$",
-    author: 'fancycravel',
-  },
-  {
-    img: 'http://placehold.it/300x300',
-    title: 'Vegetables',
-    price: "30$",
-    author: 'jill111',
-  },
-  {
-    img: 'http://placehold.it/300x300',
-    title: 'Water plant',
-    price: "30$",
-    author: 'BkrmadtyaKarki',
-  },
-];
 
 class Item extends Component {
   render() {
@@ -122,9 +73,9 @@ class SearchResult extends Component {
         cols={5}
         padding={10}
       >
-        {tilesData.map((tile) => (
+        {this.props.itemsInfo.map((tile) => (
           <Item
-            key={tile.title}
+            key={tile.itemID}
             title={tile.title}
             price={tile.price}
             img={tile.img}
@@ -189,10 +140,12 @@ class ItemList extends Component {
 
     const sortBy = parseInt(props.params.sortBy, 10);
     const filterBy = parseInt(props.params.filterBy, 10);
+
     this.state = {
       query: props.params.query === undefined ? "" : props.params.query,
       sortBy: isNaN(sortBy) ? 1 : sortBy,
       filterBy: isNaN(filterBy) ? 1 : filterBy,
+      hasData: false
     };
 
     this.onSortByChange  = (value) => {
@@ -201,16 +154,54 @@ class ItemList extends Component {
 
     this.onSearchClick = (value) => {
       this.setState(update(this.state, {query: {$set: value}}));
+    };
+
+    this.requestData = () => {
+      this.itemsInfo = null;
+      const callback = (data, error) => {
+        if(data !== null) {
+          this.itemsInfo = data.itemsInfo;
+          this.setState(update(this.state, {hasData: {$set: true}}));
+        }
+      };
+      call('itemlist',
+            {query: this.state.query,
+              sortBy: this.state.sortBy,
+              filter: this.state.filterBy},
+            callback
+          )
     }
   }
 
+  componentWillMount() {
+    this.requestData();
+  }
+
+
   render() {
+    let result = null;
+
+    if (this.state.hasData) {
+      result = (
+          <SearchResult
+            itemsInfo={this.itemsInfo}
+          />
+      )
+    } else {
+      result = (
+          <div>
+            <CircularProgress />
+            正在加载
+          </div>
+      )
+    }
+
     return <Paper>
       <SearchBar
         query={this.state.query}
         sortBy={this.state.sortBy}
         onSortByChange={this.onSortByChange}/>
-      <SearchResult/>
+      {result}
     </Paper>
   }
 }

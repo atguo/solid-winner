@@ -147,9 +147,10 @@ class ShoppingCart extends Component {
 
       </TableBody>
     </Table>
-      <CartChecker
-        sum={sum}
-        />
+      
+    <CartChecker
+      sum={sum}
+      />
     </Paper>
   }
 }

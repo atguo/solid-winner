@@ -1,0 +1,54 @@
+{
+  "itemsInfo": [
+    {
+      "itemID": "1",
+      "img": "http://placehold.it/300x300",
+      "title": "Tasty burger",
+      "price": "30$",
+      "intro": "pashminu"
+    },
+    {
+      "itemID": "2",
+      "img": "http://placehold.it/300x300",
+      "title": "Camera",
+      "price": "30$",
+      "intro": "Danson67"
+    },
+    {
+      "itemID": "3",
+      "img": "http://placehold.it/300x300",
+      "title": "Morning",
+      "price": "30$",
+      "intro": "fancycrave1"
+    },
+    {
+      "itemID": "4",
+      "img": "http://placehold.it/300x300",
+      "title": "Hats",
+      "price": "30$",
+      "intro": "Hans"
+    },
+    {
+      "itemID": "5",
+      "img": "http://placehold.it/300x300",
+      "title": "Honey",
+      "price": "30$",
+      "intro": "fancycravel"
+    },
+    {
+      "itemID": "6",
+      "img": "http://placehold.it/300x300",
+      "title": "Vegetables",
+      "price": "30$",
+      "intro": "jill111"
+    },
+    {
+      "itemID": "7",
+      "img": "http://placehold.it/300x300",
+      "title": "Water plant",
+      "price": "30$",
+      "intro": "BkrmadtyaKarki"
+    }
+  ]
+}
+
