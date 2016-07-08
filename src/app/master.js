@@ -3,21 +3,15 @@ import Title from 'react-title-component'
 import {connect} from 'react-redux';
 import update from 'immutability-helper'
 
-import UserInfo from './component/user_info'
+import AppDrawer from './component/app_drawer'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import {List, ListItem} from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-
 import ActionShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
-import ActionHome from 'material-ui/svg-icons/action/home';
-import ActionSearch from 'material-ui/svg-icons/action/search';
-import ActionSettings from 'material-ui/svg-icons/action/settings';
 
 class Master extends Component {
   constructor(props) {
@@ -60,59 +54,10 @@ class Master extends Component {
             }
           />
 
-          <Drawer
+          <AppDrawer
             open={this.state.navDrawerOpen}
-            docked={false}
-            onRequestChange={this.handleSetNavDrawerOpen}
-          >
-            <List>
-              <ListItem
-                disabled={true}
-                children={
-                  <UserInfo
-                    handleSetNavDrawerOpen={this.handleSetNavDrawerOpen}
-                  />
-                }
-              />
-
-              <div
-                onClick={() => {
-                  this.setState({
-                    navDrawerOpen: false,
-                  });
-                }}
-              >
-                <ListItem
-                  key='Home'
-                  primaryText='主页'
-                  leftIcon={<ActionHome />}
-                  href='/#/Home'
-                />
-
-                <ListItem
-                  key='Search'
-                  primaryText='搜索'
-                  leftIcon={<ActionSearch />}
-                  href='/#/ItemList'
-                />
-
-                <ListItem
-                  key='ShoppingCart'
-                  primaryText='购物车'
-                  leftIcon={<ActionShoppingBasket />}
-                  href='/#/ShoppingCart'
-                />
-
-                <ListItem
-                  key='Settings'
-                  primaryText='设置'
-                  leftIcon={<ActionSettings />}
-                  href='/#/ItemDetail/Xxx'
-                />
-              </div>
-
-            </List>
-          </Drawer>
+            handleSetNavDrawerOpen={this.handleSetNavDrawerOpen}
+          />
 
           {this.props.children}
 
