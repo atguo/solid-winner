@@ -56,10 +56,17 @@ class Master extends Component {
 
           <AppDrawer
             open={this.state.navDrawerOpen}
+            lower={this.state.lowerDrawer}
             handleSetNavDrawerOpen={this.handleSetNavDrawerOpen}
           />
 
-          {this.props.children}
+          {
+            React.cloneElement(this.props.children, {
+              onLowerDrawerChange: (lower) => {
+                this.setState({lowerDrawer: lower});
+              }
+            })
+          }
 
         </div>
       </MuiThemeProvider>

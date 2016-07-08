@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import UserInfo from './user_info'
 
 import Drawer from 'material-ui/Drawer';
+import Divider from 'material-ui/Divider';
 import {List, ListItem} from 'material-ui/List';
 
 import ActionShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
@@ -64,8 +65,10 @@ class AppDrawer extends Component {
               leftIcon={<ActionSettings />}
               href='/#/ItemDetail/Xxx'
             />
-          </div>
 
+            {this.props.lower ? <Divider /> : ''}
+            {this.props.lower}
+          </div>
         </List>
       </Drawer>
     );

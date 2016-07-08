@@ -5,6 +5,7 @@ import call from '../api'
 
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import {GridList, GridTile} from 'material-ui/GridList';
+import {ListItem} from 'material-ui/List';
 
 class Home extends Component {
   constructor(props) {
@@ -13,27 +14,29 @@ class Home extends Component {
     }
   }
 
-  getData() {
-    call(
-      'home',
-      {},
+  componentWillMount() {
+    call('home', {},
       (data, err) => {
-        console.log(data, err)
+        this.props.onLowerDrawerChange(
+          data.category.map((elem) => {
+            return <ListItem
+              key={elem.name}
+              primaryText={elem.name}
+              href={elem.href}
+            />
+          })
+        );
         this.setState(data);
       }
     )
-  }
-
-  componentWillMount() {
-    this.getData();
     store.dispatch(setTitle('SAPE: 电商平台'));
   }
 
   render() {
-    console.log('home.render', this.state)
     if (this.state.components == null) {
       return <p>正在加载</p>;
     }
+
     return (
       <div>
         {
@@ -60,17 +63,17 @@ class Home extends Component {
                         cols={4}
                         padding={10}
                       >
-                      {
-                        elem.items.map((item) => (
-                            <GridTile
-                              key={item.title}
-                              title={item.title}
-                              subtitle={item.intro}
-                            >
-                              <img src={item.img}/>
-                            </GridTile>
+                        {
+                          elem.items.map((item) => (
+                              <GridTile
+                                key={item.title}
+                                title={item.title}
+                                subtitle={item.intro}
+                              >
+                                <img src={item.img}/>
+                              </GridTile>
 
-                      ))}
+                        ))}
                       </GridList>
                     </CardText>
                   </Card>

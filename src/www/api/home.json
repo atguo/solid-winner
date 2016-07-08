@@ -1,8 +1,21 @@
 {
+  "category": [
+    {
+      "name": "手机",
+      "href": "/#/ItemList/手机"
+    }, {
+      "name": "平板",
+      "href": "/#/ItemList/平板"
+    }, {
+      "name": "咖啡",
+      "href": "/#/ItemList/咖啡"
+    }, {
+      "name": "办公",
+      "href": "/#/ItemList/办公"
+    }
+  ],
   "components": [
     {
-      "type": "category"
-    }, {
       "type": "pic",
       "img": "http://www.baidu.com/img/bd_logo1.png",
       "link": "/#/Pay",
