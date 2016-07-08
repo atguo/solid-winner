@@ -22,7 +22,7 @@ import FlatButton from 'material-ui/FlatButton'
 import {blue500} from 'material-ui/styles/colors'
 import {setTitle} from '../action/navigation'
 
-import {addCartItem} from '../action/shopping_cart'
+import {addCartItem, deleteCartItem} from '../action/shopping_cart'
 
 
 const styles = {
