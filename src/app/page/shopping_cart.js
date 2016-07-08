@@ -55,9 +55,9 @@ class ShoppingCart extends Component {
   }
 
   render() {
-    let sum = this.props.itemNos
-      .map((itemNo) => (
-        itemInfo[itemNo].itemPrice * this.props.amount[itemNo]))
+    let sum = this.props.itemIDs
+      .map((itemID) => (
+        itemInfo[itemID].itemPrice * this.props.amount[itemID]))
       .reduce((p, c) => (
         p + c
       ), 0);
@@ -79,18 +79,18 @@ class ShoppingCart extends Component {
       <TableBody
         displayRowCheckbox={false}>
 
-        {this.props.itemNos.map((itemNo, index) => {
-          let item = itemInfo[itemNo];
+        {this.props.itemIDs.map((itemID, index) => {
+          let item = itemInfo[itemID];
 
           let onDeleteClick = (event) => {
-            store.dispatch(deleteCartItem(itemNo))
+            store.dispatch(deleteCartItem(itemID))
           };
 
           let onAmountChange = (event) => {
             const amount = parseInt(event.currentTarget.value, 10);
 
             if (!isNaN(amount)) {
-              store.dispatch(changeCartItemAmount(itemNo, amount));
+              store.dispatch(changeCartItemAmount(itemID, amount));
             }
           };
 
@@ -105,13 +105,13 @@ class ShoppingCart extends Component {
             <TableRowColumn>{item.itemPrice}</TableRowColumn>
             <TableRowColumn>
               <TextField
-                value={this.props.amount[itemNo]}
+                value={this.props.amount[itemID]}
                 onChange={onAmountChange}
                 name={index}
               />
             </TableRowColumn>
             <TableRowColumn>
-              {parseInt(this.props.amount[itemNo], 10) * item.itemPrice}
+              {parseInt(this.props.amount[itemID], 10) * item.itemPrice}
             </TableRowColumn>
             <TableRowColumn>
               <FlatButton
@@ -135,9 +135,9 @@ const mapStateToProps = (state, props) => {
   let cart = state.shopping_cart.cart;
   let amount = {};
   cart.forEach((item) => {
-    amount[item.itemNo] = item.itemAmount;
+    amount[item.itemID] = item.itemAmount;
   });
-  return update(props, {amount: {$set: amount}, itemNos: {$set: cart.map((item) => item.itemNo)}});
+  return update(props, {amount: {$set: amount}, itemIDs: {$set: cart.map((item) => item.itemID)}});
 };
 
 export default connect(mapStateToProps)(ShoppingCart);
