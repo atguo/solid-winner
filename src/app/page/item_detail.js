@@ -22,7 +22,7 @@ import FlatButton from 'material-ui/FlatButton'
 import {blue500} from 'material-ui/styles/colors'
 import {setTitle} from '../action/navigation'
 
-import {addCartItem} from '../action/shopping_cart'
+import {addCartItem, deleteCartItem} from '../action/shopping_cart'
 
 
 const styles = {
@@ -101,19 +101,15 @@ class ItemDetail extends Component{
   }
 
   getData() {
-    console.log(this.state);
     if(this.state.data == null) {
-      this.setState({itemID: this.props.params.itemID})
       //TO DO: request itemID info
       call('itemDetail',
-          {itemID: this.state.itemID},
+          {},
           (data,error) => {
-            console.log('data', data,error);
-            this.setState(data.details);
-
+            //console.log("data:   ", data, error);
+            this.setState(data);
           }
       )
-
     }
   }
 
@@ -122,9 +118,12 @@ class ItemDetail extends Component{
     store.dispatch(setTitle('SAPE: 电商平台'));
   }
 
-
-
   render() {
+    let info = this.state[this.props.params.itemID];
+    //console.log("info:   ", this.state[this.props.params.itemID]);
+    //console.log("id:   ", this.props.params.itemID);
+    if(info){
+      //console.log("info   ", info);
       return (
           <div>
             <Tabs>
@@ -132,19 +131,19 @@ class ItemDetail extends Component{
                 <Card>
                   <CardMedia
                       overlay={
-                    <CardTitle title={this.state.picName} subtitle={this.state.picSubTitle} />
+                    <CardTitle title={info.picName} subtitle={info.picSubTitle} />
                   }
                   >
-                    <img src={this.state.itemURL}/>
+                    <img src={info.itemURL}/>
                   </CardMedia>
                   <Card>
-                    <CardHeader title={this.state.itemName}
+                    <CardHeader title={info.itemName}
                                 actAsExpander={true}
                                 showExpandableButton={true}
                     />
                     <CardText expandable={true}>
-                      {this.state.itemInfo}
-                    </CardText>
+                      {info.itemInfo}
+                    </CardText>ss
                     <CardActions expandable={true}>
                       <FlatButton label="加入购物车"
                                   style={styles.button}
@@ -198,6 +197,10 @@ class ItemDetail extends Component{
           </div>
       );
     }
+
+    else{
+      return <p>没有该商品</p>;
+    }}
 }
 
 
