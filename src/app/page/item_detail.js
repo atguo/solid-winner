@@ -197,7 +197,6 @@ class ItemDetail extends Component{
           </div>
       );
     }
-
     else{
       return <p>没有该商品</p>;
     }}

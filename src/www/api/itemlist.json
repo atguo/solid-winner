@@ -2,6 +2,7 @@
   "itemsInfo": [
     {
       "itemID": "1",
+      "name": "Bicycle",
       "img": "http://placehold.it/300x300",
       "title": "Tasty burger",
       "price": "30$",
@@ -9,6 +10,7 @@
     },
     {
       "itemID": "2",
+      "name": "Bicycle",
       "img": "http://placehold.it/300x300",
       "title": "Camera",
       "price": "30$",
@@ -16,6 +18,7 @@
     },
     {
       "itemID": "3",
+      "name": "Bicycle",
       "img": "http://placehold.it/300x300",
       "title": "Morning",
       "price": "30$",
@@ -23,6 +26,7 @@
     },
     {
       "itemID": "4",
+      "name": "Bicycle",
       "img": "http://placehold.it/300x300",
       "title": "Hats",
       "price": "30$",
@@ -30,6 +34,7 @@
     },
     {
       "itemID": "5",
+      "name": "Bicycle",
       "img": "http://placehold.it/300x300",
       "title": "Honey",
       "price": "30$",
@@ -37,6 +42,7 @@
     },
     {
       "itemID": "6",
+      "name": "Bicycle",
       "img": "http://placehold.it/300x300",
       "title": "Vegetables",
       "price": "30$",
@@ -44,6 +50,7 @@
     },
     {
       "itemID": "7",
+      "name": "Bicycle",
       "img": "http://placehold.it/300x300",
       "title": "Water plant",
       "price": "30$",

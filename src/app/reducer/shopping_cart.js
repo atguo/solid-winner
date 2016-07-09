@@ -17,9 +17,10 @@ const shopping_cart = (state = initState, action) => {
       let index = cart.findIndex((item) => (
         item.itemID === action.itemID
       ));
-
+      //console.log("index   ", index);
+      console.log("index state   ", state);
       if (index != -1){
-        let currentAmount = state[index].itemAmount;
+        let currentAmount = cart[index].itemAmount;
         return update(state, {cart: {$splice: [[index, 1, {itemID: action.itemID, itemAmount: currentAmount + 1}]]}});
       }
 

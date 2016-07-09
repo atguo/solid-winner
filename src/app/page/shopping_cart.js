@@ -3,6 +3,7 @@ import {setTitle} from '../action/navigation'
 import {store} from '../app'
 import {connect} from 'react-redux';
 import {deleteCartItem, changeCartItemAmount} from '../action/shopping_cart';
+import call from '../api'
 
 import Paper from 'material-ui/Paper';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
@@ -15,14 +16,14 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 const itemInfo = {
   '1': {
     itemName: "Bicycle",
-    itemImg: "http://placehold.it/300x300",
-    itemIntro: "Bicycle is something that has two wheels and people can ride on.",
+    img: "http://placehold.it/300x300",
+    itemInfo: "Bicycle is something that has two wheels and people can ride on.",
     itemPrice: 3000,
   },
   '2': {
     itemName: "Bicycle",
-    itemImg: "http://placehold.it/300x300",
-    itemIntro: "Bicycle is something that has two wheels and people can ride on.",
+    img: "http://placehold.it/300x300",
+    itemInfo: "Bicycle is something that has two wheels and people can ride on.",
     itemPrice: 3000,
   },
 }
@@ -53,38 +54,38 @@ class CartChecker extends Component {
 }
 
 class ShoppingCart extends Component {
-  componentWillMount() {
-    store.dispatch(setTitle('购物车'));
-  }
-
   constructor(props) {
     super(props);
+    this.state = {
+      hasData: false,
+    }
 
-    this.TableRows = ()=> (
-        this.props.itemIDs.map((itemID, index) => {
-          let item = itemInfo[itemID];
+    this.TableRows = () => {
+      return this.props.itemIDs.map((itemID, index) => {
 
-          let onDeleteClick = (event) => {
-            store.dispatch(deleteCartItem(itemID))
-          };
+        let item = this.itemInfo[itemID];
+        console.log("item:  ", item);
+        let onDeleteClick = (event) => {
+          store.dispatch(deleteCartItem(itemID))
+        };
 
-          let onAmountChange = (event) => {
-            const amount = parseInt(event.currentTarget.value, 10);
+        let onAmountChange = (event) => {
+          const amount = parseInt(event.currentTarget.value, 10);
 
-            if (!isNaN(amount)) {
-              store.dispatch(changeCartItemAmount(itemID, amount));
-            }
-          };
+          if (!isNaN(amount)) {
+            store.dispatch(changeCartItemAmount(itemID, amount));
+          }
+        };
 
-          return <TableRow>
-            <TableRowColumn style={style.itemColumnStyle}>
-              <div>
-                <img src={item.itemImg}
-                     style={{display:"inline-block",
-                             width: 100, height: 100, margin: 5}}/>
+        return <TableRow>
+          <TableRowColumn style={style.itemColumnStyle}>
+            <div>
+              <img src={item.img}
+                style={{display:"inline-block",
+                  width: 100, height: 100, margin: 5}}/>
                 <div style={{display:"inline-block", verticalAlign:"top", margin: 5}}>
                   <h1 style={{fontSize:"20", fontWeight:"400"}}>{item.itemName}</h1>
-                  <p>{item.itemIntro}</p>
+                  <p>{item.itemInfo}</p>
                 </div>
               </div>
             </TableRowColumn>
@@ -95,9 +96,9 @@ class ShoppingCart extends Component {
 
             <TableRowColumn>
               <TextField
-                  value={this.props.amount[itemID]}
-                  onChange={onAmountChange}
-                  name={index}
+                value={this.props.amount[itemID]}
+                onChange={onAmountChange}
+                itemName={index}
               />
             </TableRowColumn>
 
@@ -107,54 +108,78 @@ class ShoppingCart extends Component {
 
             <TableRowColumn>
               <FlatButton
-                  label="删除"
-                  id={index + 'delete'}
-                  onClick={onDeleteClick}
+                label="删除"
+                id={index + 'delete'}
+                onClick={onDeleteClick}
               />
             </TableRowColumn>
           </TableRow>
-        })
+      })
+    }
+  }
+
+
+  getData() {
+    call("itemDetail",
+        {ID: this.props.itemIDs},
+        (data, err) => {
+          if (data !== null) {
+            //console.log("data  :", data, err);
+            this.itemInfo = data;
+            this.setState({hasData: true})
+          }
+        }
     )
   }
 
+  componentWillMount() {
+    this.getData();
+    store.dispatch(setTitle('购物车'));
+  }
+
   render() {
-    let sum = this.props.itemIDs
-      .map((itemID) => (
-        itemInfo[itemID].itemPrice * this.props.amount[itemID]))
-      .reduce((p, c) => (
-        p + c
-      ), 0);
-    
-    
-    return <Paper>
-    <Table
-      selectable={false}>
-      <TableHeader
-        adjustForCheckbox={false}
-        displaySelectAll={false}>
-        <TableRow>
-          <TableHeaderColumn style={style.itemColumnStyle}>商品</TableHeaderColumn>
-          <TableHeaderColumn>价格</TableHeaderColumn>
-          <TableHeaderColumn>数量</TableHeaderColumn>
-          <TableHeaderColumn>总价</TableHeaderColumn>
-          <TableHeaderColumn>操作</TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-      <TableBody
-        displayRowCheckbox={false}>
+    //console.log("itemInfo   ", this.itemInfo)
+    if (this.state.hasData) {
 
-        {this.TableRows()}
+      let sum = this.props.itemIDs
+          .map((itemID) => (
+          this.itemInfo[itemID].itemPrice * this.props.amount[itemID]))
+          .reduce((p, c) => (
+              p + c
+          ), 0);
 
-      </TableBody>
-    </Table>
-      
-    <CartChecker
-      sum={sum}
-      />
-    </Paper>
+      return <Paper>
+        <Table
+            selectable={false}>
+          <TableHeader
+              adjustForCheckbox={false}
+              displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn style={style.itemColumnStyle}>商品</TableHeaderColumn>
+              <TableHeaderColumn>价格</TableHeaderColumn>
+              <TableHeaderColumn>数量</TableHeaderColumn>
+              <TableHeaderColumn>总价</TableHeaderColumn>
+              <TableHeaderColumn>操作</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody
+              displayRowCheckbox={false}>
+
+            {this.TableRows()}
+
+          </TableBody>
+        </Table>
+
+        <CartChecker
+            sum={sum}
+        />
+      </Paper>;
+    }
+    else {
+      return <p>等待数据</p>;
+    }
   }
 }
-
 const mapStateToProps = (state, props) => {
   let cart = state.shopping_cart.cart;
   let amount = {};
@@ -162,6 +187,6 @@ const mapStateToProps = (state, props) => {
     amount[item.itemID] = item.itemAmount;
   });
   return update(props, {amount: {$set: amount}, itemIDs: {$set: cart.map((item) => item.itemID)}});
-};
+}
 
 export default connect(mapStateToProps)(ShoppingCart);
