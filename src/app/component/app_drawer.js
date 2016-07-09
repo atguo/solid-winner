@@ -20,7 +20,8 @@ class AppDrawer extends Component {
     return (
       <Drawer
         open={this.props.open}
-        docked={false}
+        docked={this.props.docked}
+        zDepth={this.props.zDepth}
         onRequestChange={this.props.handleSetNavDrawerOpen}
       >
         <List>

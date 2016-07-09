@@ -8,6 +8,7 @@ import AppDrawer from './component/app_drawer'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -34,11 +35,25 @@ class Master extends Component {
   }
 
   render() {
+    let docked;
+    let contentStyle;
+    let theme = getMuiTheme(lightBaseTheme);
+    if (this.props.width == LARGE) {
+      docked = true;
+      contentStyle = {
+        marginLeft: theme.drawer.width,
+      };
+    } else {
+      docked = false;
+      contentStyle = {};
+    }
+
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-        <div>
+      <MuiThemeProvider muiTheme={theme}>
+        <div style={contentStyle}>
           <Title render={this.props.title} />
           <AppBar
+            iconElementLeft={docked ? <div /> : null}
             onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
             title={this.props.title}
             iconElementRight={
@@ -55,7 +70,9 @@ class Master extends Component {
           />
 
           <AppDrawer
-            open={this.state.navDrawerOpen}
+            open={this.state.navDrawerOpen || docked}
+            docked={docked}
+            zDepth={docked ? 1 : 2}
             lower={this.state.lowerDrawer}
             handleSetNavDrawerOpen={this.handleSetNavDrawerOpen}
           />
@@ -80,4 +97,4 @@ const mapStateToProps = (state, props) => {
   });
 }
 
-export default connect(mapStateToProps)(Master);
+export default connect(mapStateToProps)(withWidth()(Master));
