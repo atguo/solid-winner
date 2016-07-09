@@ -31,7 +31,8 @@
           "img": "http://placehold.it/300x300",
           "title": "Breakfast",
           "price": "30$",
-          "intro": "jill111"
+          "intro": "jill111",
+          "link": "/#/ItemDetail/Breakfast"
         },
         {
           "img": "http://placehold.it/300x300",

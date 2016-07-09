@@ -65,14 +65,16 @@ class Home extends Component {
                       >
                         {
                           elem.items.map((item) => (
-                              <GridTile
-                                key={item.title}
-                                title={item.title}
-                                subtitle={item.intro}
-                              >
-                                <img src={item.img}/>
-                              </GridTile>
-
+                            <GridTile
+                              key={item.title}
+                              title={item.title}
+                              subtitle={item.intro}
+                              onClick={() => {
+                                if (item.link) window.location.replace(item.link);
+                              }}
+                            >
+                              <img src={item.img}/>
+                            </GridTile>
                         ))}
                       </GridList>
                     </CardText>
