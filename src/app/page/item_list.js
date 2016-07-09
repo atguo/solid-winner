@@ -19,20 +19,21 @@ import call from "../api";
 
 class Item extends Component {
   render() {
+    console.log("PROPS KEY", this.props.itemID);
     return <GridTile
-      key={this.props.key}
+      key={this.props.itemID}
       title={this.props.title}
       subtitle={this.props.price}
-      actionIcon={
-                        <IconMenu
-                          iconButtonElement={<NavigationMoreVert color="white"/>}
-                          anchorOrigin={{horizontal: 'left', vertical:'top'}}
-                          targetOrigin={{horizontal: 'left', vertical:'top'}}
-                        >
-                          <MenuItem primaryText="Add to cart" />
-                          <MenuItem primaryText="Detail" />
-                        </IconMenu>
-                        }
+      onClick={() => {window.location.replace("/#/itemDetail/" + this.props.itemID)}}
+      actionIcon={<IconMenu
+                    iconButtonElement={<NavigationMoreVert color="white"/>}
+                    anchorOrigin={{horizontal: 'left', vertical:'top'}}
+                    targetOrigin={{horizontal: 'left', vertical:'top'}}
+                  >
+                    <MenuItem primaryText="Add to cart" />
+                    <MenuItem primaryText="Detail" />
+                  </IconMenu>
+                  }
       actionPosition="left"
       titlePosition="top"
       titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
@@ -66,6 +67,7 @@ class SearchResult extends Component {
   }
 
   render() {
+    console.log("ID", this.props.itemsInfo);
     return <div style={this.styles.root}>
       <GridList
         style={this.styles.gridList}
@@ -75,7 +77,7 @@ class SearchResult extends Component {
       >
         {this.props.itemsInfo.map((tile) => (
           <Item
-            key={tile.itemID}
+            itemID={tile.itemID}
             title={tile.title}
             price={tile.price}
             img={tile.img}
