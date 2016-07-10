@@ -13,6 +13,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import {setTitle} from '../action/navigation';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
+import Waypoint from 'react-waypoint';
 import update from 'immutability-helper';
 import call from "../api";
 
@@ -67,7 +68,6 @@ class SearchResult extends Component {
   }
 
   render() {
-    console.log("ID", this.props.itemsInfo);
     return <div style={this.styles.root}>
       <GridList
         style={this.styles.gridList}
@@ -85,6 +85,14 @@ class SearchResult extends Component {
           />
         ))}
       </GridList>
+      <Waypoint
+        onEnter={()=>{
+          alert("ENTER the way point");
+          alert(this.props.onRequestMoreData)
+          this.props.onRequestMoreData();
+          }}
+        threshold={2.0}
+        />
     </div>
   }
 
@@ -160,19 +168,35 @@ class ItemList extends Component {
     };
 
     this.requestData = () => {
-      this.itemsInfo = null;
       const callback = (data, error) => {
         if(data !== null) {
-          this.itemsInfo = data.itemsInfo;
+          if (!this.itemsInfo){
+            this.itemsInfo = data.itemsInfo;
+          } else {
+            for (let i = 0; i < 20; i++){
+              this.itemsInfo.push({
+                "itemID": Math.random(100),
+                "name": "Bicycle",
+                "img": "http://placehold.it/300x300",
+                "title": "Hats",
+                "price": "30$",
+                "intro": "Hans"
+              });
+            }
+          }
           this.setState(update(this.state, {hasData: {$set: true}}));
         }
       };
       call('itemlist',
             {query: this.state.query,
               sortBy: this.state.sortBy,
-              filter: this.state.filterBy},
+              filterBy: this.state.filterBy},
             callback
           )
+    };
+
+    this.onRequestMoreData = ()=>{
+      this.requestData()
     }
   }
 
@@ -183,12 +207,12 @@ class ItemList extends Component {
 
   render() {
     let result = null;
-
     if (this.state.hasData) {
       result = (
           <SearchResult
             itemsInfo={this.itemsInfo}
             history={this.props.history}
+            onRequestMoreData={this.onRequestMoreData}
           />
       )
     } else {
@@ -204,7 +228,8 @@ class ItemList extends Component {
       <SearchBar
         query={this.state.query}
         sortBy={this.state.sortBy}
-        onSortByChange={this.onSortByChange}/>
+        onSortByChange={this.onSortByChange}
+/>
       {result}
     </Paper>
   }
