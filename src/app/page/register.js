@@ -77,6 +77,7 @@ class Register extends Component {
     this.state = {
       stepIndex: 0,
       finished: false,
+      agree: false,
     }
 
     this.handleNext = () => {
@@ -106,6 +107,13 @@ class Register extends Component {
         });
       }
     };
+
+    this.handleChange = () => {
+      this.setState({
+        agree: !this.state.agree,
+      })
+    }
+
 
     this.handleChildStateChange = (key, value) => {
       let msg = '';
@@ -143,13 +151,14 @@ class Register extends Component {
           <div>
               <div style={styles.position}>注册协议</div>
               <p>
-                azkjdshfakjsdhfakjshdfkuashdfiuaksdhfkuashdfiouashdfkoiuashdfkuashdfiouh
-                asdfasdfoijioasdofijuasdoidfhjasoidfjuaoisdjfaiosjdfoaisijdfaosijudfoaisjfd
-                asd;ofjasofjaslkdifjqsadfoijdwfjialifjnasidufhasdfaiushdnfaksjhfkasdbdfiaushfdkj
+                azkjdshfakjsdhfakjshdfkuashdfiuaksdhfkuashdfiouashdfkoiuashdfkuashdfiouhdfgsgwtddfasfatqwt
+                asdfasdfoijioasdofijuasdoidfhjasoidfjuaoisdjfaiosjdfoaisijdfaosijudfoaisjfdwerwerwerwerwer
+                asd;ofjasofjaslkdifjqsadfoijdwfjialifjnasidufhasdfaiushdnfaksjhfkasdbdfiaushfdkjwerwerweer
                 asjdhfgasdfbaiosugdfkasdbfhkiuashgfiouashfdkuasdhfiuasdhfiuasghdfkuahsdfkuahsdfiukhasduifh
               </p>
-              <RadioButtonGroup  defaultSelected="light">
-                <RadioButton value="light" label="同意" style={styles.radioButton} /><RadioButton value="not_light" label="不同意" style={styles.radioButton}/>
+              <RadioButtonGroup  defaultSelected="light" onChange={this.handleChange}>
+                <RadioButton value="not_light" label="同意" style={styles.radioButton} />
+                <RadioButton value="light" label="不同意" style={styles.radioButton} />
               </RadioButtonGroup>
           </div>
           );
@@ -219,11 +228,19 @@ class Register extends Component {
                     />
                     <RaisedButton
                       label={this.state.stepIndex === 2 ? 'Finish' : 'Next'}
-                      disabled={this.state.stepIndex == 1?(
-                          this.state.usernameError !== '' ||
-                          this.state.passwordError !== '' ||
-                          this.state.emailError !== ''
-                          ): false
+                      disabled= {
+                        (() => {
+                          switch(this.state.stepIndex) {
+                          case 0: {return !this.state.agree}
+                          case 1: {return (
+                            this.state.stepIndex == 1?(
+                            this.state.usernameError !== '' ||
+                            this.state.passwordError !== '' ||
+                            this.state.emailError !== ''
+                            ): false)}
+                          case 2:{return false}
+                          }
+                        })()
                       }
                       primary={true}
                       onTouchTap={this.handleNext}

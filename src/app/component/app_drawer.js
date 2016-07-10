@@ -65,7 +65,7 @@ class AppDrawer extends Component {
               key='Settings'
               primaryText='设置'
               leftIcon={<ActionSettings />}
-              onClick={() => {this.props.history.push('/Xxx')}}
+              onClick={() => {this.props.history.push('/setting')}}
             />
 
             {this.props.lower ? <Divider /> : ''}

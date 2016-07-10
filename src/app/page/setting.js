@@ -21,9 +21,7 @@ class Setting extends Component {
     constructor(props) {
         super(props)
         
-        this.state = {
-        }
-        
+        this.state = {}
     }
 
     render() {
@@ -48,7 +46,7 @@ class Setting extends Component {
                 </CardText>
                 <CardText>
                     邮箱：<TextField defaultValue="asd@asd.com" />
-             </CardText>
+                </CardText>
             </Card>
         );
     }
