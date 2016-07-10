@@ -92,7 +92,7 @@ class Register extends Component {
         });
       }
       else {
-        window.location.replace('/#/Home');
+        this.props.history.goBack();
         this.setState({
           stepIndex: 0,
           finished: false,
