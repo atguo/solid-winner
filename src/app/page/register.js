@@ -65,6 +65,14 @@ class InfoCard extends Component{
             onChange={this.handleChange}
           />
         </CardText>
+        <CardText>
+          <TextField
+              id='telephone'
+              floatingLabelText='电话'
+              errorText={this.props.telephoneError}
+              onChange={this.handleChange}
+          />
+        </CardText>
       </Card>
     );
   }
@@ -134,6 +142,10 @@ class Register extends Component {
           msg = value.match(regex) == null ? '邮箱格式不正确' : '';
           break;
         }
+        case 'telephone': {
+          let regex = /^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}/;
+          msg = value.match(regex) ==null ? '电话格式不正确' : '';
+        }
       }
 
       let updatedState = {};
@@ -169,6 +181,7 @@ class Register extends Component {
               passwordError={this.state.passwordError}
               usernameError={this.state.usernameError}
               emailError={this.state.emailError}
+              telephoneError={this.state.telephoneError}
             />
           );
         case 2:
@@ -236,7 +249,8 @@ class Register extends Component {
                             this.state.stepIndex == 1?(
                             this.state.usernameError !== '' ||
                             this.state.passwordError !== '' ||
-                            this.state.emailError !== ''
+                            this.state.emailError !== ''||
+                            this.state.telephoneError !== ''
                             ): false)}
                           case 2:{return false}
                           }
