@@ -20,7 +20,7 @@ import call from "../api";
 
 class Item extends Component {
   render() {
-    console.log("PROPS KEY", this.props.itemID);
+    //console.log("PROPS KEY", this.props.itemID);
     return <GridTile
       key={this.props.itemID}
       title={this.props.title}

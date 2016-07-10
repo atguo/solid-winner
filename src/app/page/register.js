@@ -12,12 +12,19 @@ import {
 } from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton'
 import Paper from 'material-ui/Paper'
 
 const styles = {
   step: {
     width: "100%",
     height: "100%",
+  },
+  radioButton: {
+    marginBottom: 16,
+  },
+  position: {
+      marginLeft: "50%",
   }
 }
 
@@ -68,13 +75,13 @@ class Register extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      stepIndex: 1,
+      stepIndex: 0,
       finished: false,
     }
 
     this.handleNext = () => {
       const {stepIndex} = this.state;
-      if (stepIndex ==1) {
+      if (stepIndex ==2) {
 
       }
       this.setState({
@@ -132,7 +139,20 @@ class Register extends Component {
     this.getStepContent = () => {
       switch  (this.state.stepIndex) {
         case 0:
-          return "注册协议";
+          return(
+          <div>
+              <div style={styles.position}>注册协议</div>
+              <p>
+                azkjdshfakjsdhfakjshdfkuashdfiuaksdhfkuashdfiouashdfkoiuashdfkuashdfiouh
+                asdfasdfoijioasdofijuasdoidfhjasoidfjuaoisdjfaiosjdfoaisijdfaosijudfoaisjfd
+                asd;ofjasofjaslkdifjqsadfoijdwfjialifjnasidufhasdfaiushdnfaksjhfkasdbdfiaushfdkj
+                asjdhfgasdfbaiosugdfkasdbfhkiuashgfiouashfdkuasdhfiuasdhfiuasghdfkuahsdfkuahsdfiukhasduifh
+              </p>
+              <RadioButtonGroup  defaultSelected="light">
+                <RadioButton value="light" label="同意" style={styles.radioButton} /><RadioButton value="not_light" label="不同意" style={styles.radioButton}/>
+              </RadioButtonGroup>
+          </div>
+          );
         case 1:
           return (
             <InfoCard
@@ -172,7 +192,7 @@ class Register extends Component {
             this.state.finished?(
               <p>
                 <a
-                  href="#"
+                  href="/#/Home"
                   onClick = {(event) => {
                     event.preventDefault();
                     this.setState({
@@ -199,10 +219,11 @@ class Register extends Component {
                     />
                     <RaisedButton
                       label={this.state.stepIndex === 2 ? 'Finish' : 'Next'}
-                      disabled={
-                        this.state.usernameError !== '' ||
+                      disabled={this.state.stepIndex == 1?(
+                          this.state.usernameError !== '' ||
                           this.state.passwordError !== '' ||
                           this.state.emailError !== ''
+                          ): false
                       }
                       primary={true}
                       onTouchTap={this.handleNext}
