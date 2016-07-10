@@ -36,7 +36,7 @@ class AppDrawer extends Component {
           />
 
           <div
-            onClick={() => {
+            onClick={(e) => {
               this.props.handleSetNavDrawerOpen(false);
             }}
           >
@@ -44,28 +44,28 @@ class AppDrawer extends Component {
               key='Home'
               primaryText='主页'
               leftIcon={<ActionHome />}
-              href='/#/Home'
+              onClick={() => {this.props.history.push('/Home')}}
             />
 
             <ListItem
               key='Search'
               primaryText='搜索'
               leftIcon={<ActionSearch />}
-              href='/#/ItemList'
+              onClick={() => {this.props.history.push('/ItemList')}}
             />
 
             <ListItem
               key='ShoppingCart'
               primaryText='购物车'
               leftIcon={<ActionShoppingBasket />}
-              href='/#/ShoppingCart'
+              onClick={() => {this.props.history.push('/ShoppingCart')}}
             />
 
             <ListItem
               key='Settings'
               primaryText='设置'
               leftIcon={<ActionSettings />}
-              href='/#/ItemDetail/Xxx'
+              onClick={() => {this.props.history.push('/Xxx')}}
             />
 
             {this.props.lower ? <Divider /> : ''}
