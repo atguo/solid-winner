@@ -2,23 +2,23 @@
   "category": [
     {
       "name": "手机",
-      "href": "/#/ItemList/手机"
+      "link": "/ItemList/手机"
     }, {
       "name": "平板",
-      "href": "/#/ItemList/平板"
+      "link": "/ItemList/平板"
     }, {
       "name": "咖啡",
-      "href": "/#/ItemList/咖啡"
+      "link": "/ItemList/咖啡"
     }, {
       "name": "办公",
-      "href": "/#/ItemList/办公"
+      "link": "/ItemList/办公"
     }
   ],
   "components": [
     {
       "type": "pic",
       "img": "http://www.baidu.com/img/bd_logo1.png",
-      "link": "/#/Pay",
+      "link": "/Pay",
       "style": {
         "width": "100%"
       }
@@ -32,7 +32,7 @@
           "title": "Breakfast",
           "price": "30$",
           "intro": "jill111",
-          "link": "/#/ItemDetail/Breakfast"
+          "link": "/ItemDetail/Breakfast"
         },
         {
           "img": "http://placehold.it/300x300",

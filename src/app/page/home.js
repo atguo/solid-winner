@@ -44,9 +44,13 @@ class Home extends Component {
             switch (elem.type) {
               case 'pic': {
                 return (
-                  <a href={elem.link}>
-                    <img src={elem.img} style={elem.style}/>
-                  </a>
+                  <img
+                    src={elem.img}
+                    onClick={() => {
+                      this.props.history.push(elem.link);
+                    }}
+                    style={elem.style}
+                  />
                 );
               }
 
@@ -70,7 +74,7 @@ class Home extends Component {
                               title={item.title}
                               subtitle={item.intro}
                               onClick={() => {
-                                if (item.link) window.location.replace(item.link);
+                                if (item.link) this.props.history.push(item.link);
                               }}
                             >
                               <img src={item.img}/>
