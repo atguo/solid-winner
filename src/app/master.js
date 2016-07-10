@@ -75,6 +75,7 @@ class Master extends Component {
             zDepth={docked ? 1 : 2}
             lower={this.state.lowerDrawer}
             handleSetNavDrawerOpen={this.handleSetNavDrawerOpen}
+            history={this.props.history}
           />
 
           {

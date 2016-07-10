@@ -102,7 +102,7 @@ class UserInfo extends Component {
             secondary={true}
             onClick={
               () => {
-                window.location.replace('/#/Register');
+                this.props.history.push('/Register');
                 this.props.handleSetNavDrawerOpen(false);
                 this.handleSetLoginDialogOpen(false);
               }

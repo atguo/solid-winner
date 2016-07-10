@@ -30,6 +30,7 @@ class AppDrawer extends Component {
             children={
               <UserInfo
                 handleSetNavDrawerOpen={this.props.handleSetNavDrawerOpen}
+                history={this.props.history}
               />
             }
           />
