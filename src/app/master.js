@@ -60,7 +60,7 @@ class Master extends Component {
               <IconButton
                 onClick={
                   () => {
-                    window.location.replace('/#/ShoppingCart')
+                    this.props.history.push('/ShoppingCart')
                   }
                 }
               >
