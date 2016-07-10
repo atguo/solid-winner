@@ -46,7 +46,9 @@ class CartChecker extends Component {
           label="结帐"
           primary={true}
           linkButton={true}
-          href="/#/pay"
+          onClick={() => {
+            this.props.history.push('/Pay')
+          }}
         />
       </ToolbarGroup>
     </Toolbar>
@@ -172,6 +174,7 @@ class ShoppingCart extends Component {
 
         <CartChecker
             sum={sum}
+            history={this.props.history}
         />
       </Paper>;
     }
