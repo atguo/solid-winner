@@ -66,7 +66,7 @@ class Pay extends Component{
   }
 
   getData() {
-    call('itemDetail',
+    call('itemdetail',
         {},
         (data,error) => {
           //console.log("data:   ", data, error);
@@ -122,17 +122,17 @@ class Pay extends Component{
                 showExpandableButton={true}
               />
               <CardActions expandable={true}>
-                <Table>
-                  <TableHeader displaySelectAll={false}>
+                <Table MultiSelectable={true}>
+                  <TableHeader displaySelectAll={true}>
                     <TableRow>
                       <TableRowColumn>itemName</TableRowColumn>
                       <TableRowColumn>itemAmount</TableRowColumn>
                       <TableRowColumn>Price</TableRowColumn>
                     </TableRow>
                   </TableHeader>
-                  <TableBody displayRowCheckBox={false}>
+                  <TableBody displayRowCheckBox={true}>
                     {this.props.items.map((item) => (
-                      <TableRow selectable={false}>
+                      <TableRow selectable={true}>
                         <TableRowColumn>{this.itemsinfo[item.itemID].itemName}</TableRowColumn>
                         <TableRowColumn>{item.itemAmount}</TableRowColumn>
                         <TableRowColumn>{

@@ -1,0 +1,35 @@
+{
+  "tilesData": [
+    {
+    "img": "http://placehold.it/500/500"
+    },
+    {
+    "img": "http://placehold.it/500/500"
+    },
+    {
+    "img": "http://placehold.it/500/500"
+    },
+    {
+        "img": "http://placehold.it/500/500"
+    },
+    {
+      "img": "http://placehold.it/500/500"
+    },
+    {
+      "img": "http://placehold.it/500/500"
+    }],
+  "infos" : [
+    {
+    "属性": "值"
+    },
+    {
+    "属性": "值"
+    },
+    {
+    "属性": "值"
+    },
+    {
+    "属性": "值"
+    }
+  ]
+}

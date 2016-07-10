@@ -9,6 +9,7 @@ import ItemList from './page/item_list'
 import ShoppingCart from './page/shopping_cart'
 import Pay from './page/pay'
 import Register from './page/register'
+import Setting from './page/setting'
 
 const Routes = (
   <Router history={hashHistory} >
@@ -20,6 +21,7 @@ const Routes = (
       <Route path='ShoppingCart' component={ShoppingCart} />
       <Route path='Pay' component={Pay} />
       <Route path='Register' component={Register} />
+      <Route path='Setting' component={Setting} />
     </Route>
   </Router>
 );

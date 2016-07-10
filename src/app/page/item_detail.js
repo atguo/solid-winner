@@ -18,10 +18,10 @@ import {Table,
         TableRow,
         TableRowColumn} from "material-ui/Table"
 import {GridList, GridTile} from 'material-ui/GridList'
-import FlatButton from 'material-ui/FlatButton'
-import {blue500} from 'material-ui/styles/colors'
+import RaisedButton from 'material-ui/RaisedButton'
 import {setTitle} from '../action/navigation'
 
+import Snackbar from 'material-ui/Snackbar'
 import {addCartItem, deleteCartItem} from '../action/shopping_cart'
 
 
@@ -41,6 +41,7 @@ const styles = {
   button: {
     height: 50,
     width: 120,
+    margin: 12,
   },
   fontLeft: {
     paddingLeft: 96,
@@ -96,15 +97,29 @@ class ItemDetail extends Component{
     super(props);
 
     this.state = {
-      data: null,
+      dataIntro: null,
+      hasDataDetail: false,
+      snackBarOpen: false,
+    }
+
+    this.handleTouchTap = () => {
+      this.setState({
+        snackBarOpen: true,
+      })
+    }
+
+    this.handleRequestClose = () => {
+      this.setState({
+        snackBarOpen: false,
+      })
     }
   }
 
-  getData() {
-    if(this.state.data == null) {
+  getIntroData() {
+    if(this.state.dataIntro == null) {
       //TO DO: request itemID info
-      call('itemDetail',
-          {},
+      call('itemdetail',
+          {ID: this.props.params.itemID},
           (data,error) => {
             //console.log("data:   ", data, error);
             this.setState(data);
@@ -113,15 +128,32 @@ class ItemDetail extends Component{
     }
   }
 
+  getInfoDetail() {
+    call("infodetail",
+        {ID: this.props.itemIDs},
+        (data, err) => {
+          if (data !== null) {
+            //console.log("data  :", data, err);
+            this.setState(data);
+            this.setState({hasInfoData: true})
+          }
+        }
+    )
+  }
+
   componentWillMount() {
-    this.getData();
+    this.getIntroData();
+    this.getInfoDetail();
     store.dispatch(setTitle('SAPE: 电商平台'));
   }
 
   render() {
     let info = this.state[this.props.params.itemID];
     //console.log("info:   ", this.state[this.props.params.itemID]);
+    //console.log("info   ", info);
     //console.log("id:   ", this.props.params.itemID);
+    //console.log("detail   ", this.state);
+
     if(info){
       //console.log("info   ", info);
       return (
@@ -145,11 +177,18 @@ class ItemDetail extends Component{
                       {info.itemInfo}
                     </CardText>ss
                     <CardActions expandable={true}>
-                      <FlatButton label="加入购物车"
-                                  style={styles.button}
-                                  onClick={()=> {
-                                    store.dispatch(addCartItem(this.props.params.itemID))}}
+                      <RaisedButton label="加入购物车"
+                                    style={styles.button}
+                                    primary={true}
+                                    onClick={()=> {
+                                      store.dispatch(addCartItem(this.props.params.itemID))}}
+                                    onTouchTap={this.handleTouchTap}
 
+                      />
+                      <Snackbar open={this.state.snackBarOpen}
+                                message="已添加至购物车"
+                                autoHideDuration={1000}
+                                onRequestClose={this.handleRequestClose}
                       />
                     </CardActions>
                   </Card>
@@ -165,10 +204,10 @@ class ItemDetail extends Component{
                     </TableRow>
                   </TableHeader>
                   <TableBody displayRowCheckbox={false}>
-                    {infos.map((info) => (
+                    {this.state.infos.map((info) => (
                         <TableRow selectable={false}>
-                          <TableRowColumn style={styles.fontLeft}>zz</TableRowColumn>
-                          <TableRowColumn style={styles.fontRight}>{info.zz}</TableRowColumn>
+                          <TableRowColumn style={styles.fontLeft}>属性</TableRowColumn>
+                          <TableRowColumn style={styles.fontRight}>{info.属性}</TableRowColumn>
                         </TableRow>
                     ))}
                   </TableBody>
@@ -178,7 +217,7 @@ class ItemDetail extends Component{
                           style={styles.gridList}
                 >
                   {
-                    tilesData.map((tile) => (
+                    this.state.tilesData.map((tile) => (
                         <GridTile
                             titleBackground="linear-gradient(to bottom,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%),rgba(0,0,0,0) 100%)"
                             cols={2}
@@ -201,6 +240,4 @@ class ItemDetail extends Component{
       return <p>没有该商品</p>;
     }}
 }
-
-
 export default ItemDetail;

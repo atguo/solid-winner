@@ -122,7 +122,7 @@ class ShoppingCart extends Component {
 
 
   getData() {
-    call("itemDetail",
+    call("itemdetail",
         {ID: this.props.itemIDs},
         (data, err) => {
           if (data !== null) {
