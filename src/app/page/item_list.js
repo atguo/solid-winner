@@ -24,7 +24,7 @@ class Item extends Component {
       key={this.props.itemID}
       title={this.props.title}
       subtitle={this.props.price}
-      onClick={() => {window.location.replace("/#/itemDetail/" + this.props.itemID)}}
+      onClick={() => {this.props.history.push("/itemDetail/" + this.props.itemID)}}
       actionIcon={<IconMenu
                     iconButtonElement={<NavigationMoreVert color="white"/>}
                     anchorOrigin={{horizontal: 'left', vertical:'top'}}
@@ -81,6 +81,7 @@ class SearchResult extends Component {
             title={tile.title}
             price={tile.price}
             img={tile.img}
+            history={this.props.history}
           />
         ))}
       </GridList>
@@ -187,6 +188,7 @@ class ItemList extends Component {
       result = (
           <SearchResult
             itemsInfo={this.itemsInfo}
+            history={this.props.history}
           />
       )
     } else {
