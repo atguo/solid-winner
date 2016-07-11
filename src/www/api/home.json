@@ -1,17 +1,25 @@
 {
   "category": [
     {
-      "name": "手机",
-      "link": "/ItemList/手机"
+      "name": "电子",
+      "category": [
+        {
+          "name": "手机",
+          "link": "/ItemList/手机"
+        }, {
+        "name": "平板",
+        "link": "/ItemList/平板"
+        }, {
+        "name": "跳蛋",
+        "link": "/ItemList/跳蛋"
+        }
+      ]
     }, {
-      "name": "平板",
-      "link": "/ItemList/平板"
+    "name": "咖啡",
+    "link": "/ItemList/咖啡"
     }, {
-      "name": "咖啡",
-      "link": "/ItemList/咖啡"
-    }, {
-      "name": "办公",
-      "link": "/ItemList/办公"
+    "name": "办公",
+    "link": "/ItemList/办公"
     }
   ],
   "components": [

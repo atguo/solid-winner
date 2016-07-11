@@ -11,21 +11,30 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
+    }
+
+    this.renderJsonToItem = (root) => {
+      let ret = root.category.map((elem) => {
+        return <ListItem
+          key={elem.name}
+          primaryText={elem.name}
+          onClick={() => {
+            this.props.history.push(elem.link);
+          }}
+          nestedItems={
+            elem.category ? this.renderJsonToItem(elem) : undefined
+          }
+        />
+      })
+      return ret;
     }
   }
 
   componentWillMount() {
     call('home', {},
       (data, err) => {
-        this.props.onLowerDrawerChange(
-          data.category.map((elem) => {
-            return <ListItem
-              key={elem.name}
-              primaryText={elem.name}
-              href={elem.href}
-            />
-          })
-        );
+        this.props.onLowerDrawerChange(this.renderJsonToItem(data));
         this.setState(data);
       }
     )
