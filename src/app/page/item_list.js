@@ -11,6 +11,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import {setTitle} from '../action/navigation';
+import  {blue300} from 'material-ui/styles/colors'
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import Waypoint from 'react-waypoint';
@@ -87,8 +88,8 @@ class SearchResult extends Component {
       </GridList>
       <Waypoint
         onEnter={()=>{
-          alert("ENTER the way point");
-          alert(this.props.onRequestMoreData)
+          //alert("ENTER the way point");
+          //alert(this.props.onRequestMoreData)
           this.props.onRequestMoreData();
           }}
         threshold={2.0}
@@ -100,8 +101,15 @@ class SearchResult extends Component {
 
 
 class SearchBar extends Component {
+
   constructor(props) {
     super(props);
+
+    this.styles = {
+      menu: {
+        color: blue300,
+      }
+    }
 
     this.onSortByChange  = (event, index, value) => {
       this.props.onSortByChange(value);
@@ -116,6 +124,8 @@ class SearchBar extends Component {
     return  <Toolbar>
       <ToolbarGroup>
         <DropDownMenu
+          zDepth={8}
+          labelStyle={this.styles.menu}
           value={this.props.sortBy}
           onChange={this.onSortByChange}>
           <MenuItem value={1} label="By Price Low To High" primaryText="Price Low To High" />
@@ -123,8 +133,6 @@ class SearchBar extends Component {
           <MenuItem value={3} label="By Newest Arrival" primaryText="Newest Arrival" />
           <MenuItem value={4} label="By Customer Review" primaryText="Customer Review" />
         </DropDownMenu>
-        <ToolbarSeparator/>
-        <ToolbarTitle text="Filters" />
       </ToolbarGroup>
       <ToolbarGroup>
         <ToolbarTitle>

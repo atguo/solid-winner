@@ -12,22 +12,6 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import update from 'immutability-helper'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-
-const itemInfo = {
-  '1': {
-    itemName: "Bicycle",
-    img: "http://placehold.it/300x300",
-    itemInfo: "Bicycle is something that has two wheels and people can ride on.",
-    itemPrice: 3000,
-  },
-  '2': {
-    itemName: "Bicycle",
-    img: "http://placehold.it/300x300",
-    itemInfo: "Bicycle is something that has two wheels and people can ride on.",
-    itemPrice: 3000,
-  },
-}
-
 const style = {
   itemColumnStyle: {
     width: "50%",

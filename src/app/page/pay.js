@@ -8,6 +8,8 @@ import update from 'immutability-helper';
 import call from '../api'
 import {store} from '../app'
 import {deleteCartItem} from '../action/shopping_cart'
+import {setTitle} from '../action/navigation'
+
 
 import {Card,
   CardActions,
@@ -57,12 +59,14 @@ class Pay extends Component{
     this.state = {
       value: 0,
       hasData: false,
+      choiceID: [],
     }
     this.handleChange = (event, index, value) => {
       this.setState({
         value: value,
       });
     }
+
   }
 
   getData() {
@@ -80,6 +84,7 @@ class Pay extends Component{
 
   componentWillMount() {
     this.getData();
+    store.dispatch(setTitle('结算'));
   }
 
 
@@ -122,17 +127,18 @@ class Pay extends Component{
                 showExpandableButton={true}
               />
               <CardActions expandable={true}>
-                <Table MultiSelectable={true}>
-                  <TableHeader displaySelectAll={true}>
+                <Table selectable={false}>
+                  <TableHeader displaySelectAll={false}
+                               adjustForCheckbox={false}>
                     <TableRow>
                       <TableRowColumn>itemName</TableRowColumn>
                       <TableRowColumn>itemAmount</TableRowColumn>
                       <TableRowColumn>Price</TableRowColumn>
                     </TableRow>
                   </TableHeader>
-                  <TableBody displayRowCheckBox={true}>
+                  <TableBody displayRowCheckbox={false}>
                     {this.props.items.map((item) => (
-                      <TableRow selectable={true}>
+                      <TableRow selectable={false}>
                         <TableRowColumn>{this.itemsinfo[item.itemID].itemName}</TableRowColumn>
                         <TableRowColumn>{item.itemAmount}</TableRowColumn>
                         <TableRowColumn>{
@@ -175,8 +181,6 @@ const mapStateToProps = (state, props) => {
   let items = [];
   for (let i=0; i < cart.length; i++) {
     items.push({
-      itemName: "name",
-      itemPrice: 3000,
       itemID: cart[i].itemID,
       itemAmount: cart[i].itemAmount,
     });

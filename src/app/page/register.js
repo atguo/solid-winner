@@ -143,7 +143,7 @@ class Register extends Component {
           break;
         }
         case 'telephone': {
-          let regex = /^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}/;
+          let regex = /[0-9]{11}/;
           msg = value.match(regex) ==null ? '电话格式不正确' : '';
         }
       }

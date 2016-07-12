@@ -51,47 +51,6 @@ const styles = {
   },
 };
 
-const tilesData = [
-  {
-    img: 'http://placehold.it/500/500',
-  },
-  {
-    img: 'http://placehold.it/500/500',
-  },
-  {
-    img: 'http://placehold.it/500/500',
-  },
-  {
-    img: 'http://placehold.it/500/500',
-  },
-  {
-    img: 'http://placehold.it/500/500',
-  },
-  {
-    img: 'http://placehold.it/500/500',
-  },
-  {
-    img: 'http://placehold.it/500/500',
-  },
-
-]
-
-const infos = [
-  {
-    zz: "xxx"
-  },
-  {
-    zz: "xxx"
-  },
-  {
-    zz: "xxx"
-  },
-  {
-    zz: "xxx"
-  },
-]
-
-
 class ItemDetail extends Component{
   constructor(props) {
     super(props);
@@ -149,7 +108,6 @@ class ItemDetail extends Component{
 
   render() {
     let info = this.state[this.props.params.itemID];
-    //console.log("info:   ", this.state[this.props.params.itemID]);
     //console.log("info   ", info);
     //console.log("id:   ", this.props.params.itemID);
     //console.log("detail   ", this.state);

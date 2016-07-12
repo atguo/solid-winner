@@ -23,6 +23,10 @@ class Setting extends Component {
         
         this.state = {}
     }
+    
+    getUseMsg() {
+        call
+    }
 
     render() {
         return (
