@@ -175,32 +175,29 @@ class ItemList extends Component {
       this.setState(update(this.state, {query: {$set: value}}));
     };
 
+    this.itemsInfo = []
 
     this.requestData = () => {
       const callback = (data, error) => {
-        if(data !== null) {
-          if (!this.itemsInfo){
+        if(data == null) {
+          console.log('item_list: ', error);
+        } else {
+          console.log('item_list: ', data);
+          if (this.itemsInfo === undefined) {
             this.itemsInfo = data.itemsInfo;
           } else {
-            for (let i = 0; i < 20; i++){
-              this.itemsInfo.push({
-                "itemID": i,
-                "img": "http://placehold.it/300x300",
-                "title": "Hats",
-                "price": "30$",
-                "intro": "Hans"
-              });
-            }
+            this.itemsInfo = this.itemsInfo.concat(data.itemsInfo);
           }
           this.setState(update(this.state, {hasData: {$set: true}}));
         }
       };
-      call('itemlist',
-            {query: this.state.query,
-             sortBy: this.state.sortBy,
-             filterBy: this.state.filterBy},
-            callback
-          )
+      call('search', {
+          query: this.state.query,
+          sortBy: this.state.sortBy,
+          start: this.itemsInfo.length,
+          num: 20
+        },
+        callback)
     };
 
     this.onRequestMoreData = ()=>{
@@ -237,7 +234,7 @@ class ItemList extends Component {
         query={this.state.query}
         sortBy={this.state.sortBy}
         onSortByChange={this.onSortByChange}
-      />
+/>
       {result}
     </Paper>
   }
