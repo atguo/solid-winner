@@ -175,6 +175,7 @@ class ItemList extends Component {
       this.setState(update(this.state, {query: {$set: value}}));
     };
 
+
     this.requestData = () => {
       const callback = (data, error) => {
         if(data !== null) {
@@ -183,8 +184,7 @@ class ItemList extends Component {
           } else {
             for (let i = 0; i < 20; i++){
               this.itemsInfo.push({
-                "itemID": Math.random(100),
-                "name": "Bicycle",
+                "itemID": i,
                 "img": "http://placehold.it/300x300",
                 "title": "Hats",
                 "price": "30$",
@@ -197,8 +197,8 @@ class ItemList extends Component {
       };
       call('itemlist',
             {query: this.state.query,
-              sortBy: this.state.sortBy,
-              filterBy: this.state.filterBy},
+             sortBy: this.state.sortBy,
+             filterBy: this.state.filterBy},
             callback
           )
     };
@@ -237,7 +237,7 @@ class ItemList extends Component {
         query={this.state.query}
         sortBy={this.state.sortBy}
         onSortByChange={this.onSortByChange}
-/>
+      />
       {result}
     </Paper>
   }

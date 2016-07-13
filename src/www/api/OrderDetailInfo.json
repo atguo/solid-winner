@@ -1,0 +1,15 @@
+{
+  "id": "123",
+  "sum": 999,
+  "time": 647646,
+  "custName": "asdfsa",
+  "custAddr": "assfdassf",
+  "custPhone": 6546846854,
+  "details": [
+    {
+      "name": "asrf",
+      "unitPrice": 2351,
+      "amount": 45
+    }
+  ]
+}

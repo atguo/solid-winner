@@ -77,7 +77,7 @@ class ItemDetail extends Component{
   getIntroData() {
     if(this.state.dataIntro == null) {
       //TO DO: request itemID info
-      call('itemdetail',
+      call('itemDetail',
           {ID: this.props.params.itemID},
           (data,error) => {
             //console.log("data:   ", data, error);
@@ -89,7 +89,7 @@ class ItemDetail extends Component{
 
   getInfoDetail() {
     call("infodetail",
-        {ID: this.props.itemIDs},
+        {itemID: this.props.itemIDs},
         (data, err) => {
           if (data !== null) {
             //console.log("data  :", data, err);
