@@ -13,9 +13,11 @@ const account = (state = guestState, action) => {
     case Action.LOGIN_RESP: {
       if (action.data) {
         if (action.data.status == 'success') {
-          let ret = action.data.result;
-          ret.status = 'logged in';
-          return ret;
+          return {
+            status: 'logged in',
+            token: action.data.token,
+            username: action.data.username
+          };
         }
         if (action.data.status == 'incorrect') {
           return update(guestState, {$set: {status: 'incorrect'}});
