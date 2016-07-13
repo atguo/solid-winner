@@ -89,11 +89,11 @@ class ItemDetail extends Component{
 
   componentWillMount() {
     call("getItemDetail",
-        {ID: this.props.params.itemID},
+        {IDs: [this.props.params.itemID]},
         (data, err) => {
           if (data !== null) {
             console.log("ItemDetail: ", data, err);
-            this.setState({info: data});
+            this.setState({info: data.result});
           }
         }
     )
@@ -101,97 +101,101 @@ class ItemDetail extends Component{
   }
 
   render() {
-    let info = this.state.info;
-
-    if (info) {
-      return (
-        <div>
-          <Tabs>
-            <Tab label="简介">
-              <Card>
-
-                <CardMedia
-                  overlay={
-                    <CardTitle title={info.name}/>
-                    }
-                >
-                  <img src={info.headImage}/>
-                </CardMedia>
-
-                <Card>
-                  <CardHeader title="Description" />
-                  <CardText>
-                    {info.description}
-                  </CardText>
-
-                  <CardActions>
-                    <RaisedButton label="加入购物车"
-                      style={styles.button}
-                      primary={true}
-                      onClick={
-                        ()=> {
-                          store.dispatch(addCartItem(this.props.params.itemID))
-                        }
-                      }
-                      onTouchTap={this.handleTouchTap}
-                    />
-                    <Snackbar open={this.state.snackBarOpen}
-                      message="已添加至购物车"
-                      autoHideDuration={1000}
-                      onRequestClose={this.handleRequestClose}
-                    />
-                  </CardActions>
-
-                </Card>
-              </Card>
-            </Tab>
-
-            <Tab label="参数">
-              <Table>
-                <TableHeader displaySelectAll={false}>
-                  <TableRow>
-                    <TableRowColumn>Attribute</TableRowColumn>
-                    <TableRowColumn>Value</TableRowColumn>
-                  </TableRow>
-                </TableHeader>
-
-                <TableBody displayRowCheckbox={false}>
-                  {
-                    (() => {
-                      let ret = [];
-                      for (let key in info.properties) {
-                        let value = info.properties[key];
-                        ret.push(
-                          <TableRow selectable={false}>
-                            <TableRowColumn style={styles.fontLeft}>
-                              {key}
-                            </TableRowColumn>
-                            <TableRowColumn style={styles.fontRight}>
-                              {value}
-                            </TableRowColumn>
-                          </TableRow>
-                        )
-                      }
-                      return ret;
-                    })()
-                  }
-                </TableBody>
-              </Table>
-            </Tab>
-
-            <Tab label="图片">
-              {
-                info.images.map((imageUrl) => (
-                  <img src={imageUrl} style={{width: "100%"}}/>
-                ))
-              }
-            </Tab>
-
-          </Tabs>
-        </div>
-      );
-    } else{
+    let info;
+    if (this.state.info) {
+      info = this.state.info[parseInt(this.props.params.itemID)];
+    }
+    if (!info) {
       return <p>正在加载……</p>;
-    }}
+    }
+
+    return (
+      <div>
+        <Tabs>
+          <Tab label="简介">
+            <Card>
+
+              <CardMedia
+                overlay={
+                  <CardTitle title={info.name}/>
+                  }
+              >
+                <img src={info.headImage}/>
+              </CardMedia>
+
+              <Card>
+                <CardHeader title="Description" />
+                <CardText>
+                  {info.description}
+                </CardText>
+
+                <CardActions>
+                  <RaisedButton label="加入购物车"
+                    style={styles.button}
+                    primary={true}
+                    onClick={
+                      ()=> {
+                        store.dispatch(addCartItem(this.props.params.itemID))
+                      }
+                    }
+                    onTouchTap={this.handleTouchTap}
+                  />
+                  <Snackbar open={this.state.snackBarOpen}
+                    message="已添加至购物车"
+                    autoHideDuration={1000}
+                    onRequestClose={this.handleRequestClose}
+                  />
+                </CardActions>
+
+              </Card>
+            </Card>
+          </Tab>
+
+          <Tab label="参数">
+            <Table>
+              <TableHeader displaySelectAll={false}>
+                <TableRow>
+                  <TableRowColumn>Attribute</TableRowColumn>
+                  <TableRowColumn>Value</TableRowColumn>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody displayRowCheckbox={false}>
+                {
+                  (() => {
+                    let ret = [];
+                    for (let key in info.properties) {
+                      let value = info.properties[key];
+                      ret.push(
+                        <TableRow selectable={false}>
+                          <TableRowColumn style={styles.fontLeft}>
+                            {key}
+                          </TableRowColumn>
+                          <TableRowColumn style={styles.fontRight}>
+                            {value}
+                          </TableRowColumn>
+                        </TableRow>
+                      )
+                    }
+                    return ret;
+                  })()
+                }
+              </TableBody>
+            </Table>
+          </Tab>
+
+          <Tab label="图片">
+            {
+              info.images.map((imageUrl) => (
+                <img src={imageUrl} style={{width: "100%"}}/>
+              ))
+            }
+          </Tab>
+
+        </Tabs>
+      </div>
+    );
+
+  }
 }
 export default ItemDetail;
