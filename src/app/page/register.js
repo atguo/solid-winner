@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton'
 import Paper from 'material-ui/Paper'
+import call from '../api'
 
 const styles = {
   step: {
@@ -90,13 +91,24 @@ class Register extends Component {
 
     this.handleNext = () => {
       const {stepIndex} = this.state;
-      if (stepIndex ==2) {
-
-      }
+      let finished = stepIndex >= 2;
       this.setState({
         stepIndex: stepIndex + 1,
-        finished: stepIndex >=2,
+        finished
       });
+      if (finished) {
+        call('register', {
+          name: this.state.username,
+          password: this.state.password,
+          email: this.state.email,
+          phone: this.state.telephone,
+          sex: 'M'
+        }, (data, err) => {
+          if (data && data.status == 'success') {
+            window.alert('Register success');
+          }
+        })
+      }
     };
 
     this.handlePrev = () => {
@@ -211,7 +223,7 @@ class Register extends Component {
 
         <div style={contentStyle}>
           {
-            this.state.finished?(
+            this.state.finished ? (
               <p>
                 <a
                   href="/#/Home"
