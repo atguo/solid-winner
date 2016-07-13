@@ -77,7 +77,7 @@ class ItemDetail extends Component{
   getIntroData() {
     if(this.state.dataIntro == null) {
       //TO DO: request itemID info
-      call('itemDetail',
+      call('itemdetail',
           {ID: this.props.params.itemID},
           (data,error) => {
             //console.log("data:   ", data, error);
@@ -87,115 +87,111 @@ class ItemDetail extends Component{
     }
   }
 
-  getInfoDetail() {
-    call("infodetail",
-        {itemID: this.props.itemIDs},
+  componentWillMount() {
+    call("getItemDetail",
+        {ID: this.props.params.itemID},
         (data, err) => {
           if (data !== null) {
-            //console.log("data  :", data, err);
-            this.setState(data);
-            this.setState({hasInfoData: true})
+            console.log("ItemDetail: ", data, err);
+            this.setState({info: data});
           }
         }
     )
-  }
-
-  componentWillMount() {
-    this.getIntroData();
-    this.getInfoDetail();
     store.dispatch(setTitle('SAPE: 电商平台'));
   }
 
   render() {
-    let info = this.state[this.props.params.itemID];
-    //console.log("info   ", info);
-    //console.log("id:   ", this.props.params.itemID);
-    //console.log("detail   ", this.state);
+    let info = this.state.info;
 
-    if(info){
-      //console.log("info   ", info);
+    if (info) {
       return (
-          <div>
-            <Tabs>
-              <Tab label="简介">
-                <Card>
-                  <CardMedia
-                      overlay={
-                    <CardTitle title={info.picName} subtitle={info.picSubTitle} />
-                  }
-                  >
-                    <img src={info.itemURL}/>
-                  </CardMedia>
-                  <Card>
-                    <CardHeader title={info.itemName}
-                                actAsExpander={true}
-                                showExpandableButton={true}
-                    />
-                    <CardText expandable={true}>
-                      {info.itemInfo}
-                    </CardText>ss
-                    <CardActions expandable={true}>
-                      <RaisedButton label="加入购物车"
-                                    style={styles.button}
-                                    primary={true}
-                                    onClick={()=> {
-                                      store.dispatch(addCartItem(this.props.params.itemID))}}
-                                    onTouchTap={this.handleTouchTap}
+        <div>
+          <Tabs>
+            <Tab label="简介">
+              <Card>
 
-                      />
-                      <Snackbar open={this.state.snackBarOpen}
-                                message="已添加至购物车"
-                                autoHideDuration={1000}
-                                onRequestClose={this.handleRequestClose}
-                      />
-                    </CardActions>
-                  </Card>
-                </Card>
-              </Tab>
-
-              <Tab label="详情">
-                <Table>
-                  <TableHeader displaySelectAll={false}>
-                    <TableRow>
-                      <TableRowColumn>xxx</TableRowColumn>
-                      <TableRowColumn>xxx</TableRowColumn>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody displayRowCheckbox={false}>
-                    {this.state.infos.map((info) => (
-                        <TableRow selectable={false}>
-                          <TableRowColumn style={styles.fontLeft}>属性</TableRowColumn>
-                          <TableRowColumn style={styles.fontRight}>{info.属性}</TableRowColumn>
-                        </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-                <GridList cols={1}
-                          cellHeight={500}
-                          style={styles.gridList}
+                <CardMedia
+                  overlay={
+                    <CardTitle title={info.name}/>
+                    }
                 >
+                  <img src={info.headImage}/>
+                </CardMedia>
+
+                <Card>
+                  <CardHeader title="Description" />
+                  <CardText>
+                    {info.description}
+                  </CardText>
+
+                  <CardActions>
+                    <RaisedButton label="加入购物车"
+                      style={styles.button}
+                      primary={true}
+                      onClick={
+                        ()=> {
+                          store.dispatch(addCartItem(this.props.params.itemID))
+                        }
+                      }
+                      onTouchTap={this.handleTouchTap}
+                    />
+                    <Snackbar open={this.state.snackBarOpen}
+                      message="已添加至购物车"
+                      autoHideDuration={1000}
+                      onRequestClose={this.handleRequestClose}
+                    />
+                  </CardActions>
+
+                </Card>
+              </Card>
+            </Tab>
+
+            <Tab label="参数">
+              <Table>
+                <TableHeader displaySelectAll={false}>
+                  <TableRow>
+                    <TableRowColumn>Attribute</TableRowColumn>
+                    <TableRowColumn>Value</TableRowColumn>
+                  </TableRow>
+                </TableHeader>
+
+                <TableBody displayRowCheckbox={false}>
                   {
-                    this.state.tilesData.map((tile) => (
-                        <GridTile
-                            titleBackground="linear-gradient(to bottom,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%),rgba(0,0,0,0) 100%)"
-                            cols={2}
-                        >
-                          <img src={tile.img}/>
-                        </GridTile>
-                    ))}
-                </GridList>
-              </Tab>
+                    (() => {
+                      let ret = [];
+                      for (let key in info.properties) {
+                        let value = info.properties[key];
+                        ret.push(
+                          <TableRow selectable={false}>
+                            <TableRowColumn style={styles.fontLeft}>
+                              {key}
+                            </TableRowColumn>
+                            <TableRowColumn style={styles.fontRight}>
+                              {value}
+                            </TableRowColumn>
+                          </TableRow>
+                        )
+                      }
+                      return ret;
+                    })()
+                  }
+                </TableBody>
+              </Table>
+            </Tab>
 
-              <Tab label="评论">
-                <div></div>
-              </Tab>
+            <Tab label="图片">
+              {
+                info.images.map((imageUrl) => (
+                  <img src={imageUrl} style={{width: "100%"}}/>
+                ))
+              }
+            </Tab>
 
-            </Tabs>
-          </div>
+          </Tabs>
+        </div>
       );
-    }
-    else{
-      return <p>没有该商品</p>;
+    } else{
+      return <p>正在加载……</p>;
     }}
 }
 export default ItemDetail;
