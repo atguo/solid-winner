@@ -184,9 +184,9 @@ class ItemList extends Component {
         } else {
           console.log('item_list: ', data);
           if (this.itemsInfo === undefined) {
-            this.itemsInfo = data.itemsInfo;
+            this.itemsInfo = data.itemInfo;
           } else {
-            this.itemsInfo = this.itemsInfo.concat(data.itemsInfo);
+            this.itemsInfo = this.itemsInfo.concat(data.itemInfo);
           }
           this.setState(update(this.state, {hasData: {$set: true}}));
         }
