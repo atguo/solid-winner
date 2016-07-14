@@ -78,7 +78,7 @@ class Order extends Component {
   }
 
   componentWillMount() {
-    call("getOrderInfo",
+    call("getUserOrderInfo",
       {token: store.getState().account.token},
       (data, err) => {
         if(data !== null) {
