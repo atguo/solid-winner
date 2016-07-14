@@ -157,11 +157,26 @@ class Pay extends Component{
                     display: 'inline-block'
                   }}
                   onClick={() =>
-                    call('checkout', {
+                    call('createOrder', {
+                      token: store.getState().account.token,
+                      custName: this.state.name,
+                      custAddr: this.state.addr,
+                      custPhone: this.state.phone,
+                      list: this.props.items.map((elem) => ({
+                        goodsID: parseInt(elem.itemID),
+                        amount: elem.itemAmount
+                      }))
                     }, (data, err) => {
-                      this.props.items.map((item) => {
-                        store.dispatch(deleteCartItem(item.itemID));
-                      })
+                      if (data) {
+                        if (data.status == 'success') {
+                          window.alert('Your Order was submitted successfully.');
+                          this.props.items.map((item) => {
+                            store.dispatch(deleteCartItem(item.itemID));
+                          })
+                        } else {
+                          window.alert('Please ensure that you have enough balance.');
+                        }
+                      }
                     })
                   }
                 />
@@ -171,7 +186,7 @@ class Pay extends Component{
         );
     }
     else{
-      return <p>没有该商品</p>;
+      return <p>Syncing shopping cart... </p>;
     }
   }
 }
