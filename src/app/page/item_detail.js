@@ -89,7 +89,7 @@ class ItemDetail extends Component{
 
   componentWillMount() {
     call("getItemDetail",
-        {IDs: [this.props.params.itemID]},
+        {IDs: [parseInt(this.props.params.itemID)]},
         (data, err) => {
           if (data !== null) {
             console.log("ItemDetail: ", data, err);
