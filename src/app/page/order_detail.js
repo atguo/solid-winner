@@ -81,17 +81,12 @@ class OrderDetail extends Component {
                     </TableHeader>
                     <TableBody>
                             {this.orderInfo.details.map((item) => {
-                                console.log(item);
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableRowColumn>{item.name}</TableRowColumn>
-                                            <TableRowColumn>{item.unitPrice}</TableRowColumn>
-                                            <TableRowColumn>{item.amount}</TableRowColumn>
-                                        </TableRow>
-                                    </TableHeader>
-                                </Table>
-                                })})
+                                <TableRow>
+                                    <TableRowColumn>{item.name}</TableRowColumn>
+                                    <TableRowColumn>{item.unitPrice}</TableRowColumn>
+                                    <TableRowColumn>{item.amount}</TableRowColumn>
+                                </TableRow>
+                            })})
                     </TableBody>
                 </Table>
             </div>;

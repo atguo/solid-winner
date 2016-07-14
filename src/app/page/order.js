@@ -57,6 +57,7 @@ class OrderComponent extends Component {
                                         style={this.styles.orderButton}
                                         labelStyle={{paddingLeft:0,
                                                         paddingRight:60}}
+                                        onClick={() => {window.open("./#/orderdetail/1")}}
                         />
                         </p>
                     </div>

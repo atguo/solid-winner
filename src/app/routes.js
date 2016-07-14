@@ -25,7 +25,7 @@ const Routes = (
       <Route path='Register' component={Register} />
       <Route path='Setting' component={Setting} />
       <Route path='Order' component={Order} />
-      <Route path='OrderDetail' component={OrderDetail} />
+      <Route path='OrderDetail/:orderID' component={OrderDetail} />
     </Route>
   </Router>
 );

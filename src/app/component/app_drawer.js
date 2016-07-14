@@ -10,6 +10,7 @@ import ActionShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 import ActionSettings from 'material-ui/svg-icons/action/settings';
+import ActionReorder from 'material-ui/svg-icons/action/reorder';
 
 class AppDrawer extends Component {
   constructor(props) {
@@ -52,6 +53,13 @@ class AppDrawer extends Component {
               primaryText='搜索'
               leftIcon={<ActionSearch />}
               onClick={() => {this.props.history.push('/ItemList')}}
+            />
+
+            <ListItem
+                key='Order'
+                primaryText='订单'
+                leftIcon={<ActionReorder />}
+                onClick={() => {this.props.history.push('/order')}}
             />
 
             <ListItem
