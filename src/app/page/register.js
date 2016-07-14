@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton'
 import Paper from 'material-ui/Paper'
+import call from '../api'
 
 const styles = {
   step: {
@@ -27,7 +28,6 @@ const styles = {
       marginLeft: "50%",
   }
 }
-
 
 class InfoCard extends Component{
   constructor(props) {
@@ -90,13 +90,26 @@ class Register extends Component {
 
     this.handleNext = () => {
       const {stepIndex} = this.state;
-      if (stepIndex ==2) {
-
-      }
+      let finished = stepIndex >= 2;
       this.setState({
         stepIndex: stepIndex + 1,
-        finished: stepIndex >=2,
+        finished
       });
+      if (finished) {
+        call('register', {
+          name: this.state.username,
+          password: this.state.password,
+          email: this.state.email,
+          phone: this.state.telephone,
+          sex: 'M'
+        }, (data, err) => {
+          if (data && data.status == 'success') {
+            window.alert('Register success');
+          } else {
+            window.alert(data.message ? data.message : "Register failed");
+          }
+        })
+      }
     };
 
     this.handlePrev = () => {
@@ -161,16 +174,15 @@ class Register extends Component {
         case 0:
           return(
           <div>
-              <div style={styles.position}>注册协议</div>
-              <p>
-                azkjdshfakjsdhfakjshdfkuashdfiuaksdhfkuashdfiouashdfkoiuashdfkuashdfiouhdfgsgwtddfasfatqwt
-                asdfasdfoijioasdofijuasdoidfhjasoidfjuaoisdjfaiosjdfoaisijdfaosijudfoaisjfdwerwerwerwerwer
-                asd;ofjasofjaslkdifjqsadfoijdwfjialifjnasidufhasdfaiushdnfaksjhfkasdbdfiaushfdkjwerwerweer
-                asjdhfgasdfbaiosugdfkasdbfhkiuashgfiouashfdkuasdhfiuasdhfiuasghdfkuahsdfkuahsdfiukhasduifh
-              </p>
+              <div style={styles.position}>User Agreement</div>
+              <div>
+              <p> This User Agreement, the User Privacy Notice, the Mobile Devices Terms, and all policies posted on our sites set out the terms on which eBay offers you access to and use of our sites, services, applications and tools (collectively "Services"). You can find an overview of our policies here. All policies, the Mobile Devices Terms, and the User Privacy Notice are incorporated into this User Agreement. You agree to comply with all of the above when accessing or using our Services.</p>
+              <p>The entity you are contracting with is eBay Inc., 2065 Hamilton Ave., San Jose, CA 95125 if you reside in the United States. It is eBay Europe S.à r.l., 22-24 Boulevard Royal, L-2449 Luxembourg if you reside in the European Union; eBay India Private Limited, 14th Floor, North Block, R-Tech Park, Western Express Highway, Goregaon (East), Mumbai 400063, Maharashtra if you reside in India; and eBay International AG, Helvetiastrasse 15/17, 3005, Bern, Switzerland if you reside in any other country.</p>
+              <p>Please be advised that this User Agreement contains provisions that govern how claims you and we have against each other are resolved (see Disclaimer of Warranties; Limitation of Liability and Legal Disputes provisions below). It also contains an Agreement to Arbitrate, which will, with limited exception, require you to submit claims you have against us to binding and final arbitration, unless you opt out of the Agreement to Arbitrate (see Legal Disputes, Section B ("Agreement to Arbitrate")). Unless you opt out: (1) you will only be permitted to pursue claims against us on an individual basis, not as a plaintiff or class member in any class or representative action or proceeding and (2) you will only be permitted to seek relief (including monetary, injunctive, and declaratory relief) on an individual basis.</p>
+              </div>
               <RadioButtonGroup  defaultSelected="light" onChange={this.handleChange}>
-                <RadioButton value="not_light" label="同意" style={styles.radioButton} />
-                <RadioButton value="light" label="不同意" style={styles.radioButton} />
+                <RadioButton value="not_light" label="Agree" style={styles.radioButton} />
+                <RadioButton value="light" label="Disagree" style={styles.radioButton} />
               </RadioButtonGroup>
           </div>
           );
@@ -185,7 +197,7 @@ class Register extends Component {
             />
           );
         case 2:
-          return "set payment way";
+          return "Registering...";
         default:
           return "xxxxx";
       };
@@ -211,57 +223,40 @@ class Register extends Component {
 
         <div style={contentStyle}>
           {
-            this.state.finished?(
-              <p>
-                <a
-                  href="/#/Home"
-                  onClick = {(event) => {
-                    event.preventDefault();
-                    this.setState({
-                      stepIndex: 0,
-                      finished: false,
-                    });
-                  }}
-                >
-                  Click here
-                </a> to reset the Stepper
-              </p>
-              ):(
-                <div>
-                  <Paper>
-                    {this.getStepContent()}
-                  </Paper>
+              <div>
+                <Paper>
+                  {this.getStepContent()}
+                </Paper>
 
-                  <div style={{marginTop: 12}}>
-                    <FlatButton
-                      label="Back"
-                      onTouchTap={this.handlePrev}
-                      style={{marginRight: 12}}
-                      prinmary={true}
-                    />
-                    <RaisedButton
-                      label={this.state.stepIndex === 2 ? 'Finish' : 'Next'}
-                      disabled= {
-                        (() => {
-                          switch(this.state.stepIndex) {
-                          case 0: {return !this.state.agree}
-                          case 1: {return (
-                            this.state.stepIndex == 1?(
-                            this.state.usernameError !== '' ||
-                            this.state.passwordError !== '' ||
-                            this.state.emailError !== ''||
-                            this.state.telephoneError !== ''
-                            ): false)}
-                          case 2:{return false}
-                          }
-                        })()
-                      }
-                      primary={true}
-                      onTouchTap={this.handleNext}
-                    />
-                  </div>
+                <div style={{marginTop: 12}}>
+                  <FlatButton
+                    label="Back"
+                    onTouchTap={this.handlePrev}
+                    style={{marginRight: 12}}
+                    prinmary={true}
+                  />
+                  <RaisedButton
+                    label={this.state.stepIndex === 2 ? 'Finish' : 'Next'}
+                    disabled= {
+                      (() => {
+                        switch(this.state.stepIndex) {
+                        case 0: {return !this.state.agree}
+                        case 1: {return (
+                          this.state.stepIndex == 1?(
+                          this.state.usernameError !== '' ||
+                          this.state.passwordError !== '' ||
+                          this.state.emailError !== ''||
+                          this.state.telephoneError !== ''
+                          ): false)}
+                        case 2:{return false}
+                        }
+                      })()
+                    }
+                    primary={true}
+                    onTouchTap={this.handleNext}
+                  />
                 </div>
-                )
+              </div>
           }
         </div>
       </div>

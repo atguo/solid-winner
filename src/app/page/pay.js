@@ -12,7 +12,7 @@ import {setTitle} from '../action/navigation'
 
 
 import {Card,
-  CardActions,
+  CardText,
   CardHeader
 } from 'material-ui/Card';
 
@@ -70,15 +70,17 @@ class Pay extends Component{
   }
 
   getData() {
-    call('itemdetail',
-        {},
-        (data,error) => {
-          //console.log("data:   ", data, error);
-          if(data !== null){
-            this.itemsinfo = data;
-            this.setState(update(this.state, {hasData: {$set: true}}));
-          }
+    call('getItemDetail', {
+      IDs: this.props.items.map((item) => (
+        parseInt(item.itemID)
+      ))},
+      (data,error) => {
+        //console.log("data:   ", data, error);
+        if (data !== null) {
+          this.itemsInfo = data.result;
+          this.setState(update(this.state, {hasData: {$set: true}}));
         }
+      }
     )
   }
 
@@ -96,37 +98,32 @@ class Pay extends Component{
       return(
         <div>
           <Card>
-            <CardHeader title="收货人信息"
-              actAsExpander={true}
-              showExpandableButton={true}
-            />
-            <CardActions expandable={true}>
+            <CardHeader title="收货人信息" />
+            <CardText>
+              { /*
               <DropDownMenu value={this.state.value} onChange={this.handleChange}>
                 {items}
               </DropDownMenu>
               <TextField value={address[this.state.value].addr}/>
-            </CardActions>
+               */ }
+               <TextField
+                 floatingLabelText='收货人'
+                 onBlur={(e) => {this.setState({name: e.target.value})}}
+               />
+               <TextField
+                 floatingLabelText='地址'
+                 onBlur={(e) => {this.setState({addr: e.target.value})}}
+               />
+               <TextField
+                 floatingLabelText='电话'
+                 onBlur={(e) => {this.setState({phone: e.target.value})}}
+               />
+            </CardText>
           </Card>
 
           <Card>
-            <CardHeader title="支付方式"
-              actAsExpander={true}
-              showExpandableButton={true}
-            />>
-            <CardActions expandable={true}>
-              <FlatButton label="账户余额"/>
-              <FlatButton label="支付宝"
-                linkButton={true}
-                href="https://github.com/borgnix/solid-winner"/>
-            </CardActions>
-          </Card>
-
-          <Card>
-            <CardHeader title="订单"
-                actAsExpander={true}
-                showExpandableButton={true}
-              />
-              <CardActions expandable={true}>
+            <CardHeader title="订单" />
+              <CardText>
                 <Table selectable={false}>
                   <TableHeader displaySelectAll={false}
                                adjustForCheckbox={false}>
@@ -139,16 +136,16 @@ class Pay extends Component{
                   <TableBody displayRowCheckbox={false}>
                     {this.props.items.map((item) => (
                       <TableRow selectable={false}>
-                        <TableRowColumn>{this.itemsinfo[item.itemID].itemName}</TableRowColumn>
+                        <TableRowColumn>{this.itemsInfo[parseInt(item.itemID)].name}</TableRowColumn>
                         <TableRowColumn>{item.itemAmount}</TableRowColumn>
                         <TableRowColumn>{
-                          parseInt(this.itemsinfo[item.itemID].itemPrice*item.itemAmount, 10)
+                          this.itemsInfo[parseInt(item.itemID)].unitPrice*item.itemAmount
                         }</TableRowColumn>
                       </TableRow>
                       ))}
                     </TableBody>
                   </Table>
-                </CardActions>
+                </CardText>
               </Card>
 
               <div style={{width: '100%', textAlign: 'center'}}>
@@ -160,8 +157,26 @@ class Pay extends Component{
                     display: 'inline-block'
                   }}
                   onClick={() =>
-                    this.props.items.map((item) => {
-                      store.dispatch(deleteCartItem(item.itemID));
+                    call('createOrder', {
+                      token: store.getState().account.token,
+                      custName: this.state.name,
+                      custAddr: this.state.addr,
+                      custPhone: this.state.phone,
+                      list: this.props.items.map((elem) => ({
+                        goodsID: parseInt(elem.itemID),
+                        amount: elem.itemAmount
+                      }))
+                    }, (data, err) => {
+                      if (data) {
+                        if (data.status == 'success') {
+                          window.alert('Your Order was submitted successfully.');
+                          this.props.items.map((item) => {
+                            store.dispatch(deleteCartItem(item.itemID));
+                          })
+                        } else {
+                          window.alert('Please ensure that you have enough balance.');
+                        }
+                      }
                     })
                   }
                 />
@@ -171,7 +186,7 @@ class Pay extends Component{
         );
     }
     else{
-      return <p>没有该商品</p>;
+      return <p>Syncing shopping cart... </p>;
     }
   }
 }

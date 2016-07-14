@@ -175,7 +175,10 @@ class ItemList extends Component {
       this.setState(update(this.state, {query: {$set: value}}));
     };
 
+<<<<<<< 256dc63980e004d7b0c8547c2b1c7a9481bc523b
+=======
     this.itemsInfo = []
+>>>>>>> Unify: search.
 
     this.requestData = () => {
       const callback = (data, error) => {
@@ -184,13 +187,33 @@ class ItemList extends Component {
         } else {
           console.log('item_list: ', data);
           if (this.itemsInfo === undefined) {
-            this.itemsInfo = data.itemInfo;
+            this.itemsInfo = data.itemsInfo;
           } else {
-            this.itemsInfo = this.itemsInfo.concat(data.itemInfo);
+<<<<<<< 256dc63980e004d7b0c8547c2b1c7a9481bc523b
+            for (let i = 0; i < 20; i++){
+              this.itemsInfo.push({
+                "itemID": i,
+                "img": "http://placehold.it/300x300",
+                "title": "Hats",
+                "price": "30$",
+                "intro": "Hans"
+              });
+            }
+=======
+            this.itemsInfo = this.itemsInfo.concat(data.itemsInfo);
+>>>>>>> Unify: search.
           }
           this.setState(update(this.state, {hasData: {$set: true}}));
         }
       };
+<<<<<<< 256dc63980e004d7b0c8547c2b1c7a9481bc523b
+      call('itemlist',
+            {query: this.state.query,
+             sortBy: this.state.sortBy,
+             filterBy: this.state.filterBy},
+            callback
+          )
+=======
       call('search', {
           query: this.state.query,
           sortBy: this.state.sortBy,
@@ -198,6 +221,7 @@ class ItemList extends Component {
           num: 20
         },
         callback)
+>>>>>>> Unify: search.
     };
 
     this.onRequestMoreData = ()=>{
@@ -234,7 +258,7 @@ class ItemList extends Component {
         query={this.state.query}
         sortBy={this.state.sortBy}
         onSortByChange={this.onSortByChange}
-/>
+      />
       {result}
     </Paper>
   }

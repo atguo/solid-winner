@@ -66,18 +66,18 @@ class ShoppingCart extends Component {
         return <TableRow>
           <TableRowColumn style={style.itemColumnStyle}>
             <div>
-              <img src={item.img}
+              <img src={item.headImage}
                 style={{display:"inline-block",
                   width: 100, height: 100, margin: 5}}/>
                 <div style={{display:"inline-block", verticalAlign:"top", margin: 5}}>
-                  <h1 style={{fontSize:"20", fontWeight:"400"}}>{item.itemName}</h1>
-                  <p>{item.itemInfo}</p>
+                  <h1 style={{fontSize:"20", fontWeight:"400"}}>{item.name}</h1>
+                  <p>{item.description}</p>
                 </div>
               </div>
             </TableRowColumn>
 
             <TableRowColumn>
-              {item.itemPrice}
+              {item.unitPrice}
             </TableRowColumn>
 
             <TableRowColumn>
@@ -89,7 +89,7 @@ class ShoppingCart extends Component {
             </TableRowColumn>
 
             <TableRowColumn>
-              {parseInt(this.props.amount[itemID], 10) * item.itemPrice}
+              {parseInt(this.props.amount[itemID], 10) * item.unitPrice}
             </TableRowColumn>
 
             <TableRowColumn>
@@ -106,15 +106,15 @@ class ShoppingCart extends Component {
 
 
   getData() {
-    call("itemdetail",
-        {ID: this.props.itemIDs},
-        (data, err) => {
-          if (data !== null) {
-            //console.log("data  :", data, err);
-            this.itemInfo = data;
-            this.setState({hasData: true})
-          }
+    call("getItemDetail", {
+        IDs: this.props.itemIDs
+      },
+      (data, err) => {
+        if (data !== null) {
+          this.itemInfo = data.result;
+          this.setState({hasData: true})
         }
+      }
     )
   }
 
@@ -129,7 +129,7 @@ class ShoppingCart extends Component {
 
       let sum = this.props.itemIDs
           .map((itemID) => (
-          this.itemInfo[itemID].itemPrice * this.props.amount[itemID]))
+          this.itemInfo[parseInt(itemID)].unitPrice * this.props.amount[parseInt(itemID)]))
           .reduce((p, c) => (
               p + c
           ), 0);
